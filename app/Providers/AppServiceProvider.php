@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use \Illuminate\Support\Facades\{View as ViewFacade ,Auth};
+use Facade\FlareClient\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -24,5 +26,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         // 
+        ViewFacade::share("user", Auth::user());
     }
 }
