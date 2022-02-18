@@ -1,5 +1,5 @@
 <div class="header-button">
-    {{$user->name}}
+   
     <div class="noti-wrap">
         <div class="noti__item js-item-menu">
             <i class="zmdi zmdi-comment-more"></i>

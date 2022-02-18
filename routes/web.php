@@ -23,4 +23,5 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 Route::prefix("personal")->name("personal")->group(function(){
     Route::get('/', [App\Http\Controllers\UserController::class, 'show'])->name('index');
     Route::get('/edit', [App\Http\Controllers\UserController::class, 'edit'])->name('edit');
+    Route::post('/edit', [App\Http\Controllers\UserController::class, 'update'])->name('update');
 });
