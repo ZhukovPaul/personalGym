@@ -12,9 +12,22 @@
                                         <small> <a class="" href="/personal/edit">Edit</a></small>
                                     </div>
                                     <div class="card-body card-block">
-       
+         
         <table class="table table-borderless table-striped table-earning">
-             
+        <tr>
+                <td colspan="2">
+                    {{storage_path().'/app/public/thumbnails/' }}<br>
+                    {{$user->image->path}}<br>
+                {{Storage::url($user->image->path)}}<br>
+     
+                {{Croppa::url($user->image->path)}}
+                <img src="{{Croppa::url($user->image->path,200)}}" />
+                
+    
+
+                </td>
+                 
+            </tr>
             <tr>
                 <td>NAME</td>
                 <td>{{$user->name}}</td>

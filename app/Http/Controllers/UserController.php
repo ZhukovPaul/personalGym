@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\UserImage;
+use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\{Auth,Storage};
 
 class UserController extends Controller
 {
@@ -51,8 +53,7 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show()
-    {
-        //
+    {   
         return view('personal.index',["user"=>Auth::user()]);
     }
 
@@ -74,9 +75,43 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request /*, $id*/)
     {
-        //
+         
+        
+          
+        //echo $picture->file("image")->isValid();
+
+        $postParams = $request->only("id","name","lastname","birthday","email");
+
+        $validationRules = [
+                "name"=>"required|max:255",
+                "lastname"=>"required|max:255",
+                "birthday"=>"date",
+                "file" => "image",
+                "email"=>"email"
+            ];
+        $request->validate($validationRules);
+
+   
+        $user = \App\Models\User::find($postParams['id']);
+        //dd($postParams);
+        $user->fill($postParams);
+        $user->birthday = $postParams["birthday"];
+
+        if($request->hasFile("user_image_id")){
+            $uploadPicture = $request->file("user_image_id"); 
+            $picturePath = Storage::putFile("public",$uploadPicture,["visibility"=>Filesystem::VISIBILITY_PUBLIC]);
+
+            $userPicture = new \App\Models\UserImage();
+            $userPicture->path = $picturePath;
+            $userPicture->save();
+
+            $user->user_image_id = $userPicture->id; 
+        }
+        $user->save();
+        
+         return redirect()->route("personalindex");
     }
 
     /**

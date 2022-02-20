@@ -3,7 +3,7 @@
     <div class="noti-wrap">
         <div class="noti__item js-item-menu">
             <i class="zmdi zmdi-comment-more"></i>
-            <span class="quantity">1</span>
+           <!-- <span class="quantity">1</span>
             <div class="mess-dropdown js-dropdown">
                 <div class="mess__title">
                     <p>You have 2 news message</p>
@@ -31,11 +31,11 @@
                 <div class="mess__footer">
                     <a href="#">View all messages</a>
                 </div>
-            </div>
+            </div>-->
         </div>
         <div class="noti__item js-item-menu">
             <i class="zmdi zmdi-email"></i>
-            <span class="quantity">1</span>
+            <!--span class="quantity">1</span>
             <div class="email-dropdown js-dropdown">
                 <div class="email__title">
                     <p>You have 3 New Emails</p>
@@ -70,11 +70,11 @@
                 <div class="email__footer">
                     <a href="#">See all emails</a>
                 </div>
-            </div>
+            </div-->
         </div>
         <div class="noti__item js-item-menu">
             <i class="zmdi zmdi-notifications"></i>
-            <span class="quantity">3</span>
+            <!--span class="quantity">3</span>
             <div class="notifi-dropdown js-dropdown">
                 <div class="notifi__title">
                     <p>You have 3 Notifications</p>
@@ -109,34 +109,34 @@
                 <div class="notifi__footer">
                     <a href="#">All notifications</a>
                 </div>
-            </div>
+            </div-->
         </div>
     </div>
     <div class="account-wrap">
         <div class="account-item clearfix js-item-menu">
             <div class="image">
-                <img src="images/icon/avatar-01.jpg" alt="John Doe" />
+                <img src="/images/icon/avatar-01.jpg" alt="John Doe" />
             </div>
             <div class="content">
-                <a class="js-acc-btn" href="#">john doe</a>
+                <a class="js-acc-btn" href="{{route('personalindex')}}">john doe</a>
             </div>
             <div class="account-dropdown js-dropdown">
                 <div class="info clearfix">
                     <div class="image">
-                        <a href="#">
+                        <a href="{{route('personalindex')}}">
                             <img src="images/icon/avatar-01.jpg" alt="John Doe" />
                         </a>
                     </div>
                     <div class="content">
                         <h5 class="name">
-                            <a href="#">john doe</a>
+                            <a href="{{route('personalindex')}}">john doe</a>
                         </h5>
                         <span class="email">johndoe@example.com</span>
                     </div>
                 </div>
                 <div class="account-dropdown__body">
                     <div class="account-dropdown__item">
-                        <a href="#">
+                        <a href="{{route('personalindex')}}">
                             <i class="zmdi zmdi-account"></i>Account</a>
                     </div>
                     <div class="account-dropdown__item">
