@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\UserImage;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -40,6 +41,6 @@ class User extends Authenticatable
 
     public function image()
     {
-        return $this->hasOne(UserImage::class);
+        return $this->belongsTo(UserImage::class,"user_image_id","id");
     }
 }

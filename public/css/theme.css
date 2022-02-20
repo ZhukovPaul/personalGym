@@ -14649,3 +14649,9 @@ section {
 .vue-lists ul, .vue-lists ol {
     padding-left: 30px;
 }
+.user_preview{
+    height: 100px;
+    width: 100px;
+    background-size: cover;
+    background-position: center;
+}
