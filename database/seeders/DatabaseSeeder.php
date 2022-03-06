@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        DB::table("user_groups")->insert(["title"=>"Administrators","slug"=>"administrators"]);
+        DB::table("user_groups")->insert(["title"=>"Administrators","slug"=>"admin"]);
         DB::table("user_groups")->insert(["title"=>"Registred users","slug"=>"registred"]);
 
         //App\Models\UserGroup

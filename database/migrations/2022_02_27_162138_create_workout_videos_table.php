@@ -17,10 +17,9 @@ class CreateWorkoutVideosTable extends Migration
             $table->id();
             $table->timestamps();
             $table->foreignId("workout_id")
-            ->nullable()
             ->constrained()
-            ->onUpdate('SET NULL')
-            ->onDelete('SET NULL');
+            ->onUpdate('cascade')
+            ->onDelete('cascade');
             $table->string("title");
             $table->string("src");
         });

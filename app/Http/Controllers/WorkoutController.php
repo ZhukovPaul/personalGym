@@ -25,6 +25,7 @@ class WorkoutController extends Controller
     public function create()
     {
         //
+        return view("workout.createWorkout");
     }
 
     /**
@@ -59,6 +60,7 @@ class WorkoutController extends Controller
     public function edit(Workout $workout)
     {
         //
+         
     }
 
     /**

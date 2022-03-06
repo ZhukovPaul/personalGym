@@ -19,17 +19,12 @@ class CreateWorkoutsTable extends Migration
             $table->string("title");
             $table->string("slug");
             $table->text("description")->nullable(); 
+            $table->enum('difficulty', ['easy','normal' ,'hard']); 
             $table->foreignId("workout_section_id")
-            ->nullable()
             ->constrained()
-            ->onUpdate('SET NULL')
-            ->onDelete('SET NULL');
+            ->onUpdate('cascade')
+            ->onDelete('cascade');
             $table->foreignId("type_workout_id")
-            ->nullable()
-            ->constrained()
-            ->onUpdate('SET NULL')
-            ->onDelete('SET NULL');
-            $table->foreignId("workout_image_id")
             ->nullable()
             ->constrained()
             ->onUpdate('SET NULL')

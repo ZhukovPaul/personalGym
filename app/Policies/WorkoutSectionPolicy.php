@@ -98,7 +98,7 @@ class WorkoutSectionPolicy
     function before(User $user, $operation)
     {
         
-        if($user->inGroup( env("REGISTERED_GROUP") )){
+        if($user->inGroup( env("ADMINISTRATOR_GROUP") )){
             return true;
         }
         return false;

@@ -37,12 +37,18 @@ Route::prefix("workout")->name("workout")->group(function(){
     Route::get("/create",[WorkoutSectionController::class,"create"])->name('.create')->middleware("can:create,App\Models\WorkoutSection");
     Route::post("/",[WorkoutSectionController::class,"store"]);
     Route::get("/{workoutSection:slug}/",[WorkoutSectionController::class,"show"])->name(".show");
-    Route::get("/{workoutSection:slug}/edit",[WorkoutController::class,"edit"])->name(".edit");
+    Route::get("/{workoutSection:slug}/edit",[WorkoutSectionController::class,"edit"])->name(".edit");
+    Route::put("/{workoutSection:slug}/update",[WorkoutSectionController::class,"update"]);
+
+    Route::get("/{workoutSection:slug}/create",[WorkoutController::class,"create"])->name(".createWorkout");
     Route::get("/{workoutSection:slug}/destroy",[WorkoutController::class,"destroy"])->name(".destroy");
 });
 
 
 Route::prefix("manager")->name("manager")->group(function(){
-    Route::resource("menu",MenuController::class);
-
+    /*Route::resource("menu",MenuController::class)->names([
+        "index"=>".index",
+        "create"=>".create",
+    ]);
+    */
 });
