@@ -62,7 +62,7 @@
                                         {{ __('Forgot Your Password?') }}
                                     </a> or
                                     <a class=" " href="{{ route('register') }}">{{ __('Register') }}</a>
-                                
+                                    <a href={{route('login.vk')}}>VK</a>
                                 @endif
                             </div>
                         </div>

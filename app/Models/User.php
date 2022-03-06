@@ -18,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'lastname','email', 'password',
+       'name', 'lastname','email', 'password',
     ];
 
     /**
@@ -43,4 +43,21 @@ class User extends Authenticatable
     {
         return $this->belongsTo(UserImage::class,"user_image_id","id");
     }
+
+ 
+    function groups()
+    {
+        return $this->belongsToMany(UserGroup::class,"users_groups");
+    }
+
+    function inGroup($group)
+    {
+        return (bool)$this->groups->where("slug",$group)->count();
+    }
+
+    function isAdmin()
+    {
+        return (bool)$this->groups->where("slug","admin")->count();
+    }
+    
 }

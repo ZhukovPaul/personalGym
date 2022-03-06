@@ -11,7 +11,7 @@ class Workout extends Model
 
     public function image()
     {
-        return $this->morphOne(Image::class, 'imageable');
+        return $this->morphOne(WorkoutImage::class, 'imageable');
     }
 
 }

@@ -1,7 +1,10 @@
 <?php
 
 use App\Models\User;
+use App\Http\Controllers\{HomeController,UserController,WorkoutSectionController,WorkoutController,MenuController};
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\LoginController;
+use App\Models\Menu;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,10 +21,28 @@ Auth::routes();
  
 
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::prefix("personal")->name("personal")->group(function(){
-    Route::get('/', [App\Http\Controllers\UserController::class, 'show'])->name('index');
-    Route::get('/edit', [App\Http\Controllers\UserController::class, 'edit'])->name('edit');
-    Route::post('/edit', [App\Http\Controllers\UserController::class, 'update'])->name('update');
+    Route::get('/', [UserController::class, 'show'])->name('index');
+    Route::get('/edit', [UserController::class, 'edit'])->name('edit');
+    Route::post('/edit', [UserController::class, 'update'])->name('update');
+});
+
+Route::get("/login/vk",[LoginController::class,"redirectToProvider"])->name("login.vk");
+Route::get("/login/vk/callback",[LoginController::class,"handleProviderCallback"])->name("login.callback");
+
+Route::prefix("workout")->name("workout")->group(function(){
+    Route::get("/",[WorkoutSectionController::class,"index"])->name(".index");
+    Route::get("/create",[WorkoutSectionController::class,"create"])->name('.create')->middleware("can:create,App\Models\WorkoutSection");
+    Route::post("/",[WorkoutSectionController::class,"store"]);
+    Route::get("/{workoutSection:slug}/",[WorkoutSectionController::class,"show"])->name(".show");
+    Route::get("/{workoutSection:slug}/edit",[WorkoutController::class,"edit"])->name(".edit");
+    Route::get("/{workoutSection:slug}/destroy",[WorkoutController::class,"destroy"])->name(".destroy");
+});
+
+
+Route::prefix("manager")->name("manager")->group(function(){
+    Route::resource("menu",MenuController::class);
+
 });
