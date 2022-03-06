@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class WorkoutSection extends Model
 {
     use HasFactory;
+
+    public function image()
+    {
+        return $this->morphMany(WorkoutImage::class,"imageable");
+    }
 }

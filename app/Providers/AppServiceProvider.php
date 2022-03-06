@@ -25,7 +25,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // 
+        
         ViewFacade::share("user", Auth::user());
     }
 }

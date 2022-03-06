@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateWorkoutSectionsTable extends Migration
+class CreateMuscleGroupsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,12 @@ class CreateWorkoutSectionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('workout_sections', function (Blueprint $table) {
+        Schema::create('muscle_groups', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->string('title');
+            $table->string('slug');
+            $table->text('description');
         });
     }
 
@@ -26,6 +29,6 @@ class CreateWorkoutSectionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('workout_sections');
+        Schema::dropIfExists('muscle_groups');
     }
 }

@@ -54,7 +54,15 @@ class UserController extends Controller
      */
     public function show()
     {   
-        return view('personal.index',["user"=>Auth::user()]);
+
+        $curUser = Auth::user();
+        
+
+        
+        //$curUser->image->path =  \Thumbnail::src( env( 'APP_URL' ) . $curUser->image->path )->url( true );    
+        $img =  \Thumbnail::src( env( 'APP_URL' ) . $curUser->image->path )->smartcrop(220, 220)->url( true );    
+           
+        return view('personal.index',["user"=>$curUser,'smallImage'=>$img]);
     }
 
     /**
@@ -77,16 +85,12 @@ class UserController extends Controller
      */
     public function update(Request $request /*, $id*/)
     {
-         
-        
-          
-        //echo $picture->file("image")->isValid();
-
+                  
         $postParams = $request->only("id","name","lastname","birthday","email");
 
         $validationRules = [
                 "name"=>"required|max:255",
-                "lastname"=>"required|max:255",
+               // "lastname"=>"required|max:255",
                 "birthday"=>"date",
                 "file" => "image",
                 "email"=>"email"
