@@ -45,18 +45,19 @@ class User extends Authenticatable
     }
 
  
-    function groups()
+    public function groups()
     {
         return $this->belongsToMany(UserGroup::class,"users_groups");
     }
 
-    function inGroup($group)
+    public function inGroup($group)
     {
         return (bool)$this->groups->where("slug",$group)->count();
     }
 
-    function isAdmin()
+    public function isAdmin()
     {
+       
         return (bool)$this->groups->where("slug","admin")->count();
     }
     

@@ -14,7 +14,7 @@ class WorkoutSectionController extends Controller
 
     function __construct()
     {
-        //$this->middleware('auth');
+        $this->middleware('auth');
     }
 
     /**
@@ -49,7 +49,7 @@ class WorkoutSectionController extends Controller
         foreach ( $sections as $value) {
             $sectAll[$value["id"]] = $value["title"];
         }
-        return view("workout.create",["sections"=>$sectAll]);
+        return view("workout.createSection",["sections"=>$sectAll]);
     }
 
     /**
@@ -73,7 +73,7 @@ class WorkoutSectionController extends Controller
 
         $section = new WorkoutSection();
         $section->title = $result["title"];
-        $section->slug = $result["slug"];
+        $section->slug =  \Illuminate\Support\Str::slug($result["slug"],"_");
         $section->description = $result["description"];
          
         $section->save();
@@ -117,6 +117,7 @@ class WorkoutSectionController extends Controller
     public function edit(WorkoutSection $workoutSection)
     {
         //
+        return view("workout.editSection",["workout"=>$workoutSection]);
     }
 
     /**
@@ -128,6 +129,42 @@ class WorkoutSectionController extends Controller
      */
     public function update(Request $request, WorkoutSection $workoutSection)
     {
+
+        $validate_rules = [
+            "title"=>"required",
+            "slug"=>"required|unique:workout_sections",
+            "file"=>"image"
+        ];
+
+        $request->validate($validate_rules);
+
+     
+
+        $result = $request->only(["title","slug","description","file"]); 
+
+
+        $workoutSection->title = $result["title"]; 
+        $workoutSection->slug =  \Illuminate\Support\Str::slug($result["slug"],"_"); 
+        $workoutSection->description = $result["description"]; 
+        $workoutSection->save();
+
+        
+        if($request->hasFile("file")){
+           
+            Storage::delete($workoutSection->image->path);
+            $workoutSection->image->delete();
+            
+            $uploadPicture = $request->file("file");
+            $path = "/sections/".$uploadPicture->hashName() ;
+            Storage::put("/sections/", $uploadPicture); 
+            $workoutImage = new WorkoutImage();
+            $workoutImage->path = $path;
+            $workoutImage->imageable()->associate($workoutSection);
+            $workoutImage->save();
+            dd($workoutImage);
+        }
+        return redirect()->route("workout.index");
+       
         //
     }
 

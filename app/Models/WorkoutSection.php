@@ -11,6 +11,6 @@ class WorkoutSection extends Model
 
     public function image()
     {
-        return $this->morphMany(WorkoutImage::class,"imageable");
+        return $this->morphOne(WorkoutImage::class,"imageable");
     }
 }
