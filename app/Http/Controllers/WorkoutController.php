@@ -2,11 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\{Workout,WorkoutSection};
+use App\Models\{WorkoutSection,WorkoutImage,Workout};
 use Illuminate\Http\Request;
+use Illuminate\Queue\Worker;
 
 class WorkoutController extends Controller
 {
+
+
+    function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+     
     /**
      * Display a listing of the resource.
      *
@@ -22,10 +31,12 @@ class WorkoutController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(WorkoutSection $workoutSection)
     {
+        //dd($workoutSection);
         //
-        return view("workout.createWorkout");
+        echo "s";
+        return view("workout.createWorkout",["workoutSection"=>$workoutSection]);
     }
 
     /**
@@ -36,6 +47,36 @@ class WorkoutController extends Controller
      */
     public function store(Request $request)
     {
+        $validate_rules = [
+            "title"=>"required|max:50|unique:workouts",
+            "file"=>"image"
+        ];
+       
+        $request->validate($validate_rules);
+        
+        $fields = $request->only("title","description","difficulty","file","workout_section_id");
+      
+         
+        $workout = Workout::create([
+            "title" => $fields["title"],
+            "slug"  => \Illuminate\Support\Str::slug($fields["title"],"_"),
+            "description"   =>  $fields["description"],
+            "difficulty"   =>  $fields["difficulty"],
+            "workout_section_id"   =>  $fields["workout_section_id"],
+
+        ]);
+
+
+        //$workoutSection->save();
+        
+        if($request->hasFile("file")){
+            WorkoutImage::uploadImage($request->file("file"), $workout);
+        }
+        $ws = WorkoutSection::find( $fields["workout_section_id"]);
+       
+        return redirect()->route("workout.showWorkout",["workoutSection"=>$ws,"workout"=>$workout]);
+
+        
         //
     }
 
@@ -45,10 +86,14 @@ class WorkoutController extends Controller
      * @param  \App\Models\Workout  $workout
      * @return \Illuminate\Http\Response
      */
-    public function show(WorkoutSection $workoutSection,Workout $workout)
+    public function show(WorkoutSection $workoutSection, $workout)
     {
-        //
-        dd($workoutSection);
+        if( !($curWorkout = Workout::where("slug",$workout)->first())) 
+            abort(404);
+        
+            //echo $workout;
+        //dd($curWorkout->videos);
+        return view("workout.detailWorkout",["workout"=>$curWorkout, "section"=>$workoutSection]);
     }
 
     /**
@@ -57,10 +102,13 @@ class WorkoutController extends Controller
      * @param  \App\Models\Workout  $workout
      * @return \Illuminate\Http\Response
      */
-    public function edit(Workout $workout)
+    public function edit(WorkoutSection $workoutSection ,  $workout)
     {
-        //
-         
+        if( !($curWorkout = Workout::where("slug",$workout)->first())) 
+            abort(404);
+        
+            //echo $workout;
+        dd($curWorkout);
     }
 
     /**
@@ -81,8 +129,18 @@ class WorkoutController extends Controller
      * @param  \App\Models\Workout  $workout
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Workout $workout)
+    public function destroy(WorkoutSection $workoutSection, Workout $workout)
     {
         //
+        /*
+        dd($workout);
+        if($workout->image){
+            $workout->image->delete();
+        }
+        $workout->delete();
+        */
+       // return redirect()->route("workout.show",["workoutSection"=>$workoutSection]);
     }
+
+    
 }

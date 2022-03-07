@@ -14,7 +14,22 @@
         @include("layouts.header")
             <!-- HEADER DESKTOP-->
             <!-- MAIN CONTENT-->
-            <div class="main-content">
+            <section class="au-breadcrumb m-t-75">
+                <div class="section__content section__content--p30">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12">
+
+                            @yield('breadscrumbs')
+         
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </section>
+            <div class="main-content pt-4">
+
+
             @yield('content')
             </div>
             <!-- END MAIN CONTENT-->

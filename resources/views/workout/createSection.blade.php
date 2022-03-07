@@ -62,7 +62,7 @@
             {{Form::label('workout_section_id',__("workoutSection.FormSection"),["class"=>"form-control-label"])}}
         </div>
         <div class="col-12 col-md-9">
-        {{Form::select('workout_section_id',$sections,null,["class"=>"form-select w-100"])}}
+        {{Form::select('workout_section_id',$sections,null,["class"=>"custom-select"])}}
         </div>
     </div> 
     @endif

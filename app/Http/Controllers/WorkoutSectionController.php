@@ -6,6 +6,7 @@ use App\Models\{WorkoutSection,WorkoutImage,Workout};
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Contracts\Filesystem\Filesystem;
+use Illuminate\Queue\Console\WorkCommand;
 use Illuminate\Support\Facades\Storage;
 
 class WorkoutSectionController extends Controller
@@ -25,13 +26,11 @@ class WorkoutSectionController extends Controller
     public function index()
     {
         $sections = WorkoutSection::all();
-        //dd($sections[0]);
-        foreach($sections as $key=>$section){
-            $image = $sections[0]->image()->get();
-            if( $image[0] )
-                $sections[$key]["image"] =  \Thumbnail::src( env( 'APP_URL' ) .  $image[0]->path )->smartcrop(300, 150)->url( true );    
                  
-        }
+        foreach($sections as $key=>$section){
+            if($section->image)
+                $sections[$key]["image"] =  \Thumbnail::src( env( 'APP_URL' ) .  $section->image->path )->smartcrop(300, 220)->url( true );    
+        } 
          
         return view("workout.index",["sections"=>$sections]);
     }
@@ -61,35 +60,30 @@ class WorkoutSectionController extends Controller
     public function store(Request $request)
     {
         $validate_rules = [
-            "title"=>"required|max:50",
-            "slug"=>"required|max:50|unique:workout_sections",
+            "title"=>"required|max:50|unique:workout_sections",
             "file"=>"image"
         ];
        
         $request->validate($validate_rules);
         
-        $result = $request->only("title","slug","description","file");
-        //
-
-        $section = new WorkoutSection();
-        $section->title = $result["title"];
-        $section->slug =  \Illuminate\Support\Str::slug($result["slug"],"_");
-        $section->description = $result["description"];
+        $fields = $request->only("title","slug","description","workout_section_id","file");
+      
          
-        $section->save();
+        $workoutSection = WorkoutSection::create([
+            "title" => $fields["title"],
+            "slug"  => ($fields["slug"]) 
+                ? \Illuminate\Support\Str::slug($fields["slug"],"_")
+                :\Illuminate\Support\Str::slug($fields["title"],"_"),
+            "description"   =>  $fields["description"],
+            "workout_section_id"=>$fields["workout_section_id"]
+        ]);
+
+
+        //$workoutSection->save();
  
         if($request->hasFile("file")){
-           
-            $uploadPicture = $request->file("file");
-            $path = "/sections/".$uploadPicture->hashName() ;
-            Storage::put("/sections/", $uploadPicture); 
-            $workoutImage = new WorkoutImage();
-            $workoutImage->path = $path;
-            $workoutImage->imageable()->associate($section);
-            $workoutImage->save();
+            WorkoutImage::uploadImage($request->file("file"), $workoutSection);
         }
-        
-        
         
         return redirect()->route("workout.index");
     }
@@ -102,10 +96,13 @@ class WorkoutSectionController extends Controller
      */
     public function show(WorkoutSection $workoutSection)
     {
-        //
-        //dd($workoutSection);
-        //dd(Workout::where()->all();)
-        return view("workout.section",["section"=>$workoutSection]);
+        $workouts = Workout::where(["workout_section_id"=>$workoutSection->id])->get();   
+
+        foreach($workouts as $key=>$workout){
+            if($workout->image)
+                $workouts[$key]["image"] =  \Thumbnail::src( env( 'APP_URL' ) .  $workout->image->path )->smartcrop(300, 220)->url( true );    
+        } 
+        return view("workout.section",["section"=>$workoutSection,"workouts"=>$workouts]);
     }
 
     /**
@@ -116,8 +113,13 @@ class WorkoutSectionController extends Controller
      */
     public function edit(WorkoutSection $workoutSection)
     {
-        //
-        return view("workout.editSection",["workout"=>$workoutSection]);
+        $sections = \App\Models\WorkoutSection::all("id","title");
+        $sectAll = [0 => null];
+        foreach ( $sections as $value) {
+            $sectAll[$value["id"]] = $value["title"];
+        }
+  
+        return view("workout.editSection",["workout"=>$workoutSection,"sections"=>$sectAll]);
     }
 
     /**
@@ -131,37 +133,30 @@ class WorkoutSectionController extends Controller
     {
 
         $validate_rules = [
-            "title"=>"required",
-            "slug"=>"required|unique:workout_sections",
+            "title"=>"required|max:50",
             "file"=>"image"
         ];
 
         $request->validate($validate_rules);
 
-     
+        $fields = $request->only(["title","slug","description","workout_section_id","file"]); 
 
-        $result = $request->only(["title","slug","description","file"]); 
+        $workoutSection->update([
+            "title" => $fields["title"],
+            "slug"  => ($fields["slug"]) 
+                ? \Illuminate\Support\Str::slug($fields["slug"],"_")
+                :\Illuminate\Support\Str::slug($fields["title"],"_"),
+            "description"   =>  $fields["description"],
+            "workout_section_id"=>$fields["workout_section_id"]
+        ]);
 
-
-        $workoutSection->title = $result["title"]; 
-        $workoutSection->slug =  \Illuminate\Support\Str::slug($result["slug"],"_"); 
-        $workoutSection->description = $result["description"]; 
-        $workoutSection->save();
-
-        
         if($request->hasFile("file")){
            
             Storage::delete($workoutSection->image->path);
             $workoutSection->image->delete();
-            
-            $uploadPicture = $request->file("file");
-            $path = "/sections/".$uploadPicture->hashName() ;
-            Storage::put("/sections/", $uploadPicture); 
-            $workoutImage = new WorkoutImage();
-            $workoutImage->path = $path;
-            $workoutImage->imageable()->associate($workoutSection);
-            $workoutImage->save();
-            dd($workoutImage);
+
+            WorkoutImage::uploadImage($request->file("file"), $workoutSection);
+         
         }
         return redirect()->route("workout.index");
        
@@ -176,6 +171,11 @@ class WorkoutSectionController extends Controller
      */
     public function destroy(WorkoutSection $workoutSection)
     {
-        //
+        if($workoutSection->image){
+            $workoutSection->image->delete();
+        }
+        $workoutSection->delete();
+
+        return redirect()->route("workout.index");
     }
 }

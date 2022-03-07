@@ -33,15 +33,24 @@ Route::get("/login/vk",[LoginController::class,"redirectToProvider"])->name("log
 Route::get("/login/vk/callback",[LoginController::class,"handleProviderCallback"])->name("login.callback");
 
 Route::prefix("workout")->name("workout")->group(function(){
+    
+    
     Route::get("/",[WorkoutSectionController::class,"index"])->name(".index");
     Route::get("/create",[WorkoutSectionController::class,"create"])->name('.create')->middleware("can:create,App\Models\WorkoutSection");
     Route::post("/",[WorkoutSectionController::class,"store"]);
+
     Route::get("/{workoutSection:slug}/",[WorkoutSectionController::class,"show"])->name(".show");
     Route::get("/{workoutSection:slug}/edit",[WorkoutSectionController::class,"edit"])->name(".edit");
     Route::put("/{workoutSection:slug}/update",[WorkoutSectionController::class,"update"]);
-
+    Route::get("/{workoutSection:slug}/destroy",[WorkoutSectionController::class,"destroy"])->name(".destroy");
+    
     Route::get("/{workoutSection:slug}/create",[WorkoutController::class,"create"])->name(".createWorkout");
-    Route::get("/{workoutSection:slug}/destroy",[WorkoutController::class,"destroy"])->name(".destroy");
+    Route::get("/{workoutSection:slug}/{workout:slug}",[WorkoutController::class,"show"])->name(".showWorkout");
+    Route::get("/{workoutSection:slug}/{workout:slug}/edit",[WorkoutController::class,"edit"])->name(".editWorkout");
+    Route::get("/{workoutSection:slug}/{workout:slug}/destroy",[WorkoutController::class,"destroy"])->name(".destroyWorkout");
+    
+
+    Route::post("/workoutStore",[WorkoutController::class,"store"]);
 });
 
 

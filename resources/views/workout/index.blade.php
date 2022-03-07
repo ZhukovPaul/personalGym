@@ -1,5 +1,10 @@
 @extends('layouts.app')
 
+@section('breadscrumbs')
+  {{ Breadcrumbs::render('workout') }}
+@endsection
+
+
 @section('content')
 <div class="section__content section__content--p30">
 <div class="container">
@@ -19,8 +24,15 @@
         @foreach($sections as $section )
         <div class="col-4">
         <div class="card shadow-sm">
-            
+          
+        <a href="{{route('workout.show', ['workoutSection' => $section->slug]);}}" >
+          @if($section->image)
             <img  class="bd-placeholder-img card-img-top" src="{{$section->image}}">
+          @else
+            <img  class="bd-placeholder-img card-img-top" src="/images/no-image.png">
+          @endif
+        </a>
+        
             <div class="card-body">
               <p class="card-text mb-3">{{$section->title}}</p>
               <div class="d-flex justify-content-between align-items-center">
