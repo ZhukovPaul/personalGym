@@ -7,12 +7,18 @@
 @section('content')
 <div class="section__content section__content--p30">
 <div class="container">
+    <div class="text-right">
+    <small class="text-muted"><a href="{{route('workout.editWorkout',['workoutSection' => $section,'workout'=>$workout ])}}">{{__("workout.edit")}}</a></small>
+    </div>
     <h2 class="title-1">{{$workout->title}}</h2>
+    @if(Auth::user()->isAdmin())
+
+      @endif
         @if($workout->image) 
             <img src="{{$workout->image->path}}" class="w-25" />
         @endif
-
-        <div>{{$workout->description}}</div>
+<div class="au-card mt-3">
+        <div>{!! $workout->description !!}</div>
         <div>{{$workout->difficulty}}</div>
         
         @if(count($workout->videos) > 0)
@@ -22,6 +28,7 @@
             @endforeach
         @endif
 
+</div>
 </div>
 </div>
 @endsection

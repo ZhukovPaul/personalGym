@@ -47,6 +47,7 @@ Route::prefix("workout")->name("workout")->group(function(){
     Route::get("/{workoutSection:slug}/create",[WorkoutController::class,"create"])->name(".createWorkout");
     Route::get("/{workoutSection:slug}/{workout:slug}",[WorkoutController::class,"show"])->name(".showWorkout");
     Route::get("/{workoutSection:slug}/{workout:slug}/edit",[WorkoutController::class,"edit"])->name(".editWorkout");
+    Route::put("/{workoutSection:slug}/{workout:slug}/update",[WorkoutController::class,"update"]);
     Route::get("/{workoutSection:slug}/{workout:slug}/destroy",[WorkoutController::class,"destroy"])->name(".destroyWorkout");
     
 

@@ -10,4 +10,5 @@ return [
     "FormDesc" =>"Описание упражнения",
     "FormImage" =>"Изображение",
     "FormSubmit" =>"Сохранить",
+    "FormView" =>"Просмотр",
     ];
