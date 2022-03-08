@@ -21,6 +21,9 @@ Breadcrumbs::for('workout', function (BreadcrumbTrail $trail) {
 Breadcrumbs::for('workoutSection', function (BreadcrumbTrail $trail, \App\Models\WorkoutSection $workoutSection) {
     $trail->parent('home');
     $trail->push('Упражнения', route('workout.index'));
+    if( ! is_null($workoutSection->workout_section_id )){
+        $trail->push($workoutSection->section->title, route('workout.show',["workoutSection"=>$workoutSection->section]));
+    }
     $trail->push($workoutSection->title, route('workout.index'));
 });
 
@@ -30,6 +33,8 @@ Breadcrumbs::for('workoutItem', function (BreadcrumbTrail $trail,
 ) {
     $trail->parent('home');
     $trail->push('Упражнения', route('workout.index'));
+    
+    
     $trail->push($workoutSection->title, route('workout.show',["workoutSection"=>$workoutSection]));
     $trail->push($workout->title );
 });

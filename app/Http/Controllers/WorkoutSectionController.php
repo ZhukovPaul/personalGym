@@ -25,8 +25,8 @@ class WorkoutSectionController extends Controller
      */
     public function index()
     {
-        $sections = WorkoutSection::all();
-                 
+        $sections = WorkoutSection::where("workout_section_id",null)->get();
+                  
         foreach($sections as $key=>$section){
             if($section->image)
                 $sections[$key]["image"] =  \Thumbnail::src( env( 'APP_URL' ) .  $section->image->path )->smartcrop(300, 220)->url( true );    
@@ -48,7 +48,7 @@ class WorkoutSectionController extends Controller
         foreach ( $sections as $value) {
             $sectAll[$value["id"]] = $value["title"];
         }
-        return view("workout.createSection",["sections"=>$sectAll]);
+        return view("workout.section.create",["sections"=>$sectAll]);
     }
 
     /**
@@ -75,7 +75,7 @@ class WorkoutSectionController extends Controller
                 ? \Illuminate\Support\Str::slug($fields["slug"],"_")
                 :\Illuminate\Support\Str::slug($fields["title"],"_"),
             "description"   =>  $fields["description"],
-            "workout_section_id"=>$fields["workout_section_id"]
+            "workout_section_id"=>($fields["workout_section_id"]) ? $fields["workout_section_id"] : null
         ]);
 
 
@@ -96,13 +96,21 @@ class WorkoutSectionController extends Controller
      */
     public function show(WorkoutSection $workoutSection)
     {
+
+        $sections = WorkoutSection::where("workout_section_id",$workoutSection->id)->get();
+                  
+        foreach($sections as $key=>$section){
+            if($section->image)
+                $sections[$key]["image"] =  \Thumbnail::src( env( 'APP_URL' ) .  $section->image->path )->smartcrop(300, 220)->url( true );    
+        } 
+
         $workouts = Workout::where(["workout_section_id"=>$workoutSection->id])->get();   
 
         foreach($workouts as $key=>$workout){
             if($workout->image)
                 $workouts[$key]["image"] =  \Thumbnail::src( env( 'APP_URL' ) .  $workout->image->path )->smartcrop(300, 220)->url( true );    
         } 
-        return view("workout.section",["section"=>$workoutSection,"workouts"=>$workouts]);
+        return view("workout.section.index",["section"=>$workoutSection,"workouts"=>$workouts,"sections"=>$sections]);
     }
 
     /**
@@ -119,7 +127,7 @@ class WorkoutSectionController extends Controller
             $sectAll[$value["id"]] = $value["title"];
         }
   
-        return view("workout.editSection",["workout"=>$workoutSection,"sections"=>$sectAll]);
+        return view("workout.section.edit",["workout"=>$workoutSection,"sections"=>$sectAll]);
     }
 
     /**
@@ -147,7 +155,7 @@ class WorkoutSectionController extends Controller
                 ? \Illuminate\Support\Str::slug($fields["slug"],"_")
                 :\Illuminate\Support\Str::slug($fields["title"],"_"),
             "description"   =>  $fields["description"],
-            "workout_section_id"=>$fields["workout_section_id"]
+            "workout_section_id"=> ($fields["workout_section_id"]) ? $fields["workout_section_id"] : null
         ]);
 
         if($request->hasFile("file")){

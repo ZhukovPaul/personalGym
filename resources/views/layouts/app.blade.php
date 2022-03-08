@@ -6,13 +6,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Title Page-->
+
+    <x-head.tinymce-config/>
     <title> @yield('title')</title>
     @stack("css")
 </head>
 <body class="animsition">
+ 
 <div class="page-wrapper">
         @include("layouts.header")
             <!-- HEADER DESKTOP-->
+            @hasSection('breadscrumbs')
             <!-- MAIN CONTENT-->
             <section class="au-breadcrumb m-t-75">
                 <div class="section__content section__content--p30">
@@ -27,7 +31,8 @@
                     </div>
                 </div>
         </section>
-            <div class="main-content pt-4">
+        @endif
+            <div class="main-content  @hasSection('breadscrumbs') pt-4 @else m-t-25  @endif">
 
 
             @yield('content')

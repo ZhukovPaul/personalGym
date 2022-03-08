@@ -29,5 +29,10 @@ class WorkoutSection extends Model
         return $this->morphOne(WorkoutImage::class,"imageable");
     }
 
+    public function section()
+    {
+        return $this->belongsTo(WorkoutSection::class,"workout_section_id","id");
+    }
+     
    
 }

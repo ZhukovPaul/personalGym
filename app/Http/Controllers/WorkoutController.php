@@ -35,8 +35,8 @@ class WorkoutController extends Controller
     {
         //dd($workoutSection);
         //
-        echo "s";
-        return view("workout.createWorkout",["workoutSection"=>$workoutSection]);
+      
+        return view("workout.item.create",["workoutSection"=>$workoutSection]);
     }
 
     /**
@@ -93,7 +93,7 @@ class WorkoutController extends Controller
         
             //echo $workout;
         //dd($curWorkout->videos);
-        return view("workout.detailWorkout",["workout"=>$curWorkout, "section"=>$workoutSection]);
+        return view("workout.item.index",["workout"=>$curWorkout, "section"=>$workoutSection]);
     }
 
     /**

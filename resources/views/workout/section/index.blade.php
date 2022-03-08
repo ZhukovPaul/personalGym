@@ -13,6 +13,14 @@
       @endif
     </h2>
     
+    @if(count($sections) > 0)
+    <ul>
+      @foreach($sections as $curSection)
+      <li><a href="{{route('workout.show', ['workoutSection' => $curSection->slug]);}}">{{$curSection->title}}</a></li>
+      @endforeach
+    </ul>
+    @endif
+
     @if(count($workouts) < 1)
       <div class="alert alert-secondary mt-3" role="alert">
       {{__("workout.noSections")}}
