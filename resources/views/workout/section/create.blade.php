@@ -4,8 +4,7 @@
 <div class="section__content section__content--p30">
 <div class="container">
     
-    <div class="row ">
-        <div class="col-9">
+   
         @if ($errors->any())
         <div class="alert alert-danger">
         <ul>
@@ -56,7 +55,16 @@
         </div>
     </div> 
 
-   
+    @if(count($sections)>1)
+    <div class="row form-group">
+        <div class="col col-md-3">
+            {{Form::label('workout_section_id',__("workoutSection.FormSection"),["class"=>"form-control-label"])}}
+        </div>
+        <div class="col-12 col-md-9">
+        {{Form::select('workout_section_id',$sections,null,["class"=>"custom-select"])}}
+        </div>
+    </div> 
+    @endif
 
 <div class="row form-group">
     <div class="col col-md-3">
@@ -70,8 +78,7 @@
 {{Form::submit(__("workoutSection.FormSubmit"),["class"=>"btn btn-primary"])}}
  {{Form::close()}}
         </div>
-    </div>
-    </div>    
+       
 
 </div>
 </div>
