@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\{WorkoutSection,WorkoutImage,Workout};
+use App\Models\{WorkoutSection,WorkoutImage,Workout,WorkoutVideo};
 use Illuminate\Http\Request;
 use Illuminate\Queue\Worker;
 use Illuminate\Support\Facades\Storage;
@@ -55,7 +55,7 @@ class WorkoutController extends Controller
        
         $request->validate($validate_rules);
         
-        $fields = $request->only("title","description","difficulty","file","workout_section_id");
+        $fields = $request->only("title","description","difficulty","file","workout_section_id","video");
       
          
         $workout = Workout::create([
@@ -64,7 +64,6 @@ class WorkoutController extends Controller
             "description"   =>  $fields["description"],
             "difficulty"   =>  $fields["difficulty"],
             "workout_section_id"   =>  $fields["workout_section_id"],
-
         ]);
 
 
@@ -73,6 +72,9 @@ class WorkoutController extends Controller
         if($request->hasFile("file")){
             WorkoutImage::uploadImage($request->file("file"), $workout);
         }
+
+        $video = WorkoutVideo::create(["src"=>$fields["video"],"workout_id"=>$workout->id ]);
+        
         $ws = WorkoutSection::find( $fields["workout_section_id"]);
        
         return redirect()->route("workout.showWorkout",["workoutSection"=>$ws,"workout"=>$workout]);
@@ -122,6 +124,8 @@ class WorkoutController extends Controller
      */
     public function update(Request $request, $workoutSection ,Workout $workout)
     {
+
+        
         $validate_rules = [
             "title"=>"required|max:50",
             "file"=>"image"
@@ -129,7 +133,7 @@ class WorkoutController extends Controller
        
         $request->validate($validate_rules);
         
-        $fields = $request->only("title","description","difficulty","file","workout_section_id");
+        $fields = $request->only("title","description","difficulty","file","workout_section_id","video");
       
          
         $workout->update([
@@ -141,7 +145,7 @@ class WorkoutController extends Controller
 
         ]);
 
-
+        $workout->video->update(["src"=>$fields["video"] ]);
         //$workoutSection->save();
         
         if($request->hasFile("file")){
@@ -165,6 +169,7 @@ class WorkoutController extends Controller
             Storage::delete($workout->image->path);
             $workout->image->delete();
         }
+        $workout->video->delete();
         $workout->delete();
         $ws = WorkoutSection::find( $workout->workout_section_id );
         return redirect()->route("workout.show",["workoutSection"=>$ws]);

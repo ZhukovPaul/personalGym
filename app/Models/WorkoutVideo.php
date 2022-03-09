@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class WorkoutVideo extends Model
 {
+
+    protected $fillable = ["src","workout_id"];
+
     use HasFactory;
 
     public function videoable()
