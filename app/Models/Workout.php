@@ -16,9 +16,9 @@ class Workout extends Model
         return $this->morphOne(WorkoutImage::class, 'imageable');
     }
 
-    public function videos()
+    public function video()
     {
-        return $this->hasMany(WorkoutVideo::class);
+        return $this->hasOne(WorkoutVideo::class);
     }
    
 }
