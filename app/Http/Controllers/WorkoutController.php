@@ -145,7 +145,11 @@ class WorkoutController extends Controller
 
         ]);
 
-        $workout->video->update(["src"=>$fields["video"] ]);
+        if(!$workout->video){
+            WorkoutVideo::create(["src"=>$fields["video"],"workout_id"=>$workout->id ]);
+        }else{
+            $workout->video->update(["src"=>$fields["video"] ]);
+        }
         //$workoutSection->save();
         
         if($request->hasFile("file")){
