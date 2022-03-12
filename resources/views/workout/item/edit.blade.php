@@ -62,7 +62,11 @@
             {{Form::label('video',__("workoutItem.FormVideo"),["class"=>"form-control-label"])}}
         </div>
         <div class="col-12 col-md-9">
+        @if(!$workout->video)
+        {{Form::text('video',null,["class"=>"form-control"])}}
+        @else
         {{Form::text('video',$workout->video->src,["class"=>"form-control"])}}
+        @endif
         </div>
     </div> 
 
