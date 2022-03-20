@@ -12,6 +12,27 @@ Breadcrumbs::for('home', function (BreadcrumbTrail $trail) {
 });
 
 // Home > Blog
+Breadcrumbs::for('training', function (BreadcrumbTrail $trail) {
+    $trail->parent('home');
+ 
+    $trail->push('Планы тренеровок', route('training.index'));
+});
+// Home > Blog
+Breadcrumbs::for('trainingEdit', function (BreadcrumbTrail $trail,\App\Models\TrainingPlan $trainingPlan) {
+    $trail->parent('home');
+ 
+    $trail->push('Планы тренеровок', route('training.index'));
+    $trail->push($trainingPlan->title, null);
+});// Home > Blog
+Breadcrumbs::for('trainingShow', function (BreadcrumbTrail $trail,\App\Models\TrainingPlan $trainingPlan) {
+    $trail->parent('home');
+ 
+    $trail->push('Планы тренеровок', route('training.index'));
+    $trail->push($trainingPlan->title, null);
+});
+
+
+// Home > Blog
 Breadcrumbs::for('workout', function (BreadcrumbTrail $trail) {
     $trail->parent('home');
  

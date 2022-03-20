@@ -1,5 +1,6 @@
 <?
 
 return [
-    "exercises" => "Упражнения"
+    "exercises" => "Упражнения",
+    "train_plan" =>"Планы тренеровок"
 ];

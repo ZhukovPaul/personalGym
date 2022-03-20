@@ -1,7 +1,7 @@
 <?php
 
 use App\Models\User;
-use App\Http\Controllers\{HomeController,UserController,WorkoutSectionController,WorkoutController,MenuController};
+use App\Http\Controllers\{TrainingController,TrainingPlanController,HomeController,UserController,WorkoutSectionController,WorkoutController,MenuController};
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Models\Menu;
@@ -52,6 +52,17 @@ Route::prefix("workout")->name("workout")->group(function(){
     
 
     Route::post("/workoutStore",[WorkoutController::class,"store"]);
+});
+
+Route::prefix("training")->name("training")->group(function(){
+    Route::get("/",[TrainingPlanController::class,"index"])->name(".index");
+    Route::get("/{trainingPlan:id}",[TrainingPlanController::class,"show"])->name('.show');
+    Route::get("/{trainingPlan:id}/{dayOfWeek}/create",[TrainingController::class,"create"])->name('.trainCreate');
+    Route::get("/create",[TrainingPlanController::class,"create"])->name(".create");
+    Route::post("/",[TrainingPlanController::class,"store"]);
+    Route::get("/edit/{trainingPlan:id}",[TrainingPlanController::class,"edit"])->name(".edit");
+    Route::put("/update/{trainingPlan:id}",[TrainingPlanController::class,"update"]);
+
 });
 
 

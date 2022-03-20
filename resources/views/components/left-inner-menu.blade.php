@@ -1,7 +1,7 @@
 <nav class="navbar-sidebar">
                     <ul class="list-unstyled navbar__list">
                     <li><a class="" href="{{route('workout.index')}}"><i class="fas fa-tachometer-alt"></i>{{__("leftMenu.exercises")}}</a></li>
-                     
+                    <li><a class="" href="{{route('training.index')}}"><i class="fas fa-chart-bar"></i>{{__("leftMenu.train_plan")}}</a></li>
                     
                     <!--li class="active has-sub">
                             <a class="js-arrow" href="#">
