@@ -17,12 +17,7 @@ class WorkoutSection extends Model
     
         //..
     }*/
-    /*
-    static function workouts()
-    {
-         
-    }
-    */
+   
 
     public function image()
     {
@@ -33,6 +28,15 @@ class WorkoutSection extends Model
     {
         return $this->belongsTo(WorkoutSection::class,"workout_section_id","id");
     }
+
+    public function sections()
+    {
+        return $this->hasMany(WorkoutSection::class);
+    }
      
+    public function workouts()
+    {
+        return $this->hasMany(Workout::class);
+    }
    
 }

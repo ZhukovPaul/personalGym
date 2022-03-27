@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Contracts\Repositories\Repository;
 use App\Models\{WorkoutSection,WorkoutImage,Workout};
+ 
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Contracts\Filesystem\Filesystem;
@@ -12,9 +14,11 @@ use Illuminate\Support\Facades\Storage;
 class WorkoutSectionController extends Controller
 {
 
+    protected $repository;
 
-    function __construct()
+    function __construct(Repository $repository)
     {
+        $this->repository = $repository;
         $this->middleware('auth');
     }
 
@@ -25,7 +29,7 @@ class WorkoutSectionController extends Controller
      */
     public function index()
     {
-        $sections = WorkoutSection::where("workout_section_id",null)->get();
+        $sections = $this->repository->all()->where("workout_section_id",null)->all();
                   
         foreach($sections as $key=>$section){
             if($section->image)
@@ -96,15 +100,17 @@ class WorkoutSectionController extends Controller
      */
     public function show(WorkoutSection $workoutSection)
     {
-
-        $sections = WorkoutSection::where("workout_section_id",$workoutSection->id)->get();
+    
+        //$sections = WorkoutSection::where("workout_section_id",$workoutSection->id)->get();
+        $sections = $workoutSection->sections;
                   
         foreach($sections as $key=>$section){
             if($section->image)
                 $sections[$key]["image"] =  \Thumbnail::src( env( 'APP_URL' ) .  $section->image->path )->smartcrop(300, 220)->url( true );    
         } 
 
-        $workouts = Workout::where(["workout_section_id"=>$workoutSection->id])->get();   
+        //$workouts = Workout::where(["workout_section_id"=>$workoutSection->id])->get();   
+        $workouts = $workoutSection->workouts;
 
         foreach($workouts as $key=>$workout){
             if($workout->image)
