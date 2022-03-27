@@ -15,7 +15,7 @@ class RemoveTitleFromWorkoutVideos extends Migration
     {
         Schema::table('workout_videos', function (Blueprint $table) {
             //
-            $table->dropColumn('title');
+            $table->dropColumn('title'); 
         });
     }
 

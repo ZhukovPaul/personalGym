@@ -29,8 +29,8 @@ Route::prefix("personal")->name("personal")->group(function(){
     Route::post('/edit', [UserController::class, 'update'])->name('update');
 });
 
-Route::get("/login/vk",[LoginController::class,"redirectToProvider"])->name("login.vk");
-Route::get("/login/vk/callback",[LoginController::class,"handleProviderCallback"])->name("login.callback");
+Route::get("/login/vk",[LoginController::class,"redirectToVkProvider"])->name("login.vk");
+Route::get("/login/vk/callback",[LoginController::class,"handleVkProviderCallback"])->name("login.callback");
 
 Route::prefix("workout")->name("workout")->group(function(){
     

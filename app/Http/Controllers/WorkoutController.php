@@ -94,6 +94,7 @@ class WorkoutController extends Controller
         if( !($curWorkout = Workout::where("slug",$workout)->first())) 
             abort(404);
         
+            
             //echo $workout;
         //dd($curWorkout->videos);
         return view("workout.item.index",["workout"=>$curWorkout, "section"=>$workoutSection]);
@@ -118,7 +119,7 @@ class WorkoutController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request  $request 
      * @param  \App\Models\Workout  $workout
      * @return \Illuminate\Http\Response
      */
