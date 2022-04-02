@@ -5,12 +5,21 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Storage;
 
 class Workout extends Model
 {
     use HasFactory;
 
     protected $fillable = ["title","slug","description","difficulty","workout_section_id"];
+
+    public static function booted()
+    {
+       /* static::updated(function ($workout){
+            $row = $workout->title  . " (" . $workout->section->title.')';
+            Storage::disk('public')->append("system.log",$row);
+        });*/
+    }
 
     public function image()
     {

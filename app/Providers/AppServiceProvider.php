@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Contracts\Repositories\Repository;
-use App\Repositories\WorkoutRepository;
+use App\Models\WorkoutSection;
+use App\Observers\WorkotSectionObserver;
 use \Illuminate\Support\Facades\{View as ViewFacade ,Auth};
 use Facade\FlareClient\View;
 use Illuminate\Support\ServiceProvider;
@@ -30,5 +30,6 @@ class AppServiceProvider extends ServiceProvider
     {
         
         ViewFacade::share("user", Auth::user());
+        WorkoutSection::observe(WorkotSectionObserver::class);
     }
 }

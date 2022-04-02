@@ -55,10 +55,12 @@ Route::prefix("workout")->name("workout")->group(function(){
 });
 
 Route::prefix("training")->name("training")->group(function(){
+
     Route::get("/",[TrainingPlanController::class,"index"])->name(".index");
+    Route::get("/create",[TrainingPlanController::class,"create"])->name(".create");
+    
     Route::get("/{trainingPlan:id}",[TrainingPlanController::class,"show"])->name('.show');
     Route::get("/{trainingPlan:id}/{dayOfWeek}/create",[TrainingController::class,"create"])->name('.trainCreate');
-    Route::get("/create",[TrainingPlanController::class,"create"])->name(".create");
     Route::post("/",[TrainingPlanController::class,"store"]);
     Route::get("/edit/{trainingPlan:id}",[TrainingPlanController::class,"edit"])->name(".edit");
     Route::put("/update/{trainingPlan:id}",[TrainingPlanController::class,"update"]);

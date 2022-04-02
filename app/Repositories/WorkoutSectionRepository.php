@@ -4,10 +4,9 @@ namespace App\Repositories;
 
 use App\Contracts\Repositories\Repository;
 use App\Models\{WorkoutSection, Workout};
-use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 
-class WorkoutRepository implements Repository
+
+class WorkoutSectionRepository implements Repository
 {
     protected $section ; 
 
@@ -18,14 +17,18 @@ class WorkoutRepository implements Repository
 
     public function all()
     {
-        /*
+        return $this->section;
+    }
+
+    public function workouts()
+    {
         $workouts  = collect([]);
       
         foreach($this->section as $section){
             if($section->workouts)
                 $workouts = $workouts->merge($section->workouts->all());
         }
-        */
-        return $this->section;
+
+        return $workouts;
     }
 }
