@@ -15,18 +15,19 @@ class WorkoutImage extends Model
     {
         return $this->morphTo();        
     }
-
-    public function delete()
+  /*
+    public function destroy()
     {
-        Storage::delete($this->path);
-        return $this->delete();
+         Storage::delete($this->path);
+        $this->delete();         
     }
-
+ */
     static function uploadImage($file, $section)
     {
         $uploadPicture = $file;
-        $path = self::$disc.$uploadPicture->hashName() ;
-        \Illuminate\Support\Facades\Storage::put( self::$disc , $uploadPicture); 
+        //$path = self::$disc.$uploadPicture->hashName() ;
+        $path =  '/workouts/'.$file->hashName() ;
+        Storage::disk('public')->put( '/workouts/' , $file); 
         $workoutImage = new WorkoutImage();
         $workoutImage->path = $path;
         $workoutImage->imageable()->associate($section);

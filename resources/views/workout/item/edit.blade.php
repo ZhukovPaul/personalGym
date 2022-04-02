@@ -42,7 +42,7 @@
             {{Form::label('difficulty',__("workoutItem.FormDifficulty"),["class"=>"form-control-label"])}}
         </div>
         <div class="col-12 col-md-9">
-        {{Form::select('difficulty',["easy","normal","hard"],null,["class"=>"custom-select"])}}
+        {{Form::select('difficulty',["easy"=>"easy","normal"=>"normal","hard"=>"hard"],null,["class"=>"custom-select"])}}
     
         </div>
     </div> 

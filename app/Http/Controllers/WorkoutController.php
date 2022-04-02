@@ -72,12 +72,12 @@ class WorkoutController extends Controller
         if($request->hasFile("file")){
             WorkoutImage::uploadImage($request->file("file"), $workout);
         }
-
-        $video = WorkoutVideo::create(["src"=>$fields["video"],"workout_id"=>$workout->id ]);
+        if($fields["video"])
+            WorkoutVideo::create(["src"=>$fields["video"],"workout_id"=>$workout->id ]);
         
-        $ws = WorkoutSection::find( $fields["workout_section_id"]);
+         
        
-        return redirect()->route("workout.showWorkout",["workoutSection"=>$ws,"workout"=>$workout]);
+        return redirect()->route("workout.showWorkout",["workoutSection"=>WorkoutSection::find( $fields["workout_section_id"]),"workout"=>$workout]);
 
         
         //
@@ -112,7 +112,7 @@ class WorkoutController extends Controller
             abort(404);
         
             //echo $workout;
-        //dd($curWorkout);
+         
         return view("workout.item.edit",["workout"=>$curWorkout, "workoutSection"=>$workoutSection]);
     }
 
@@ -143,14 +143,14 @@ class WorkoutController extends Controller
             "description"   =>  $fields["description"],
             "difficulty"   =>  $fields["difficulty"],
             "workout_section_id"   =>  $fields["workout_section_id"],
-
         ]);
 
+        /*
         if(!$workout->video){
             WorkoutVideo::create(["src"=>$fields["video"],"workout_id"=>$workout->id ]);
         }else{
             $workout->video->update(["src"=>$fields["video"] ]);
-        }
+        }*/
         //$workoutSection->save();
         
         if($request->hasFile("file")){
@@ -172,9 +172,12 @@ class WorkoutController extends Controller
         
         if($workout->image){
             Storage::delete($workout->image->path);
-            $workout->image->delete();
+            $workout->image->delete();   
         }
-        $workout->video->delete();
+
+        if($workout->video)
+            $workout->video->delete();
+        
         $workout->delete();
         $ws = WorkoutSection::find( $workout->workout_section_id );
         return redirect()->route("workout.show",["workoutSection"=>$ws]);
