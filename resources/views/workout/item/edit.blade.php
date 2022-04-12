@@ -79,7 +79,7 @@
     </div>
     <div class="col-12 col-md-9">
         @if($workout->image)
-        <img src="{{$workout->image->path}}" class="w-100"> 
+        <img src="{{$workout->image->getPath()}}" class="w-100"> 
         @endif
         {{Form::file('file',["class"=>"form-control"])}}
     </div>

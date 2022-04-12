@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', $section->title ) 
+
 @section('breadscrumbs')
   {{ Breadcrumbs::render('workoutSection',$section) }}
 @endsection
@@ -12,9 +14,7 @@
       <small class="text-muted"><a href="{{route('workout.createWorkout',['workoutSection'=>$section])}}">{{__("workout.addWorkout")}}</a></small>
       @endif
     </h2>
-    
-    
-
+  
 
 
     @if(count($workouts) < 1)
@@ -24,7 +24,7 @@
     @else
     <div class="row mt-4">
         @foreach($workouts as $workout )
-        <div class="col-4">
+        <div class="col-3">
         <div class="card shadow-sm">
           
         <a href="{{route('workout.showWorkout', ['workoutSection' => $section,'workout'=>$workout ]);}}" >
@@ -52,6 +52,14 @@
          
         </div>
         @endforeach
+    </div>
+    @endif
+
+    @if($section["description"])
+    <div class="au-card chart-percent-card mb-2">
+        <div class="au-card-inner">
+          {!!$section["description"]!!}
+      </div>
     </div>
     @endif
 

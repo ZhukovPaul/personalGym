@@ -6,38 +6,89 @@
 
 
 @section('content')
+
+<!-- Modal -->
+<div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addModalLabel">{{__("training.addExercise")}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      {{Form::open([
+            "method"=>"POST",
+            "action"=>"\App\Http\Controllers\TrainingPlanController@addExercise",
+            'files'=>false
+    ])}}
+
+    {{Form::hidden('user_id',Auth::user()->id)}}
+
+    <div class="row form-group">
+        <div class="col col-md-3">
+            {{Form::label('difficulty',__("training.exercise"),["class"=>"form-control-label"])}}
+        </div>
+        <div class="col-12 col-md-9">
+        {{Form::select('difficulty',$workouts,null,["class"=>"custom-select"])}}
+    
+        </div>
+    </div> 
+    @for ($i = 0; $i < 3; $i++)
+    <div class="row form-group">
+        <div class="col col-md-3">
+            {{Form::label('set',__("training.set"),["class"=>"form-control-label"])}}
+        </div>
+        <div class="col-12 col-md-3">
+        {{Form::number('set_count[]',10,["class"=>"form-control"])}}
+        </div>
+        <div class="col-12 col-md-1">
+            X
+        </div>
+        <div class="col-12 col-md-3">
+        {{Form::number('set_weight[]',10,["class"=>"form-control"])}}  
+        </div>
+        <div class="col-12 col-md-1">
+        Kg
+        </div>
+    </div> 
+    @endfor
+    </div>
+      <div class="modal-footer">
+        {{Form::submit(__("training.add"),["class"=>"btn btn-primary"])}}
+      </div>
+ 
+
+    {{Form::close()}}
+    </div>
+  </div>
+</div> 
+
+
+
 <link href="/css/theme.css" rel="stylesheet" media="all">
 <div class="section__content section__content--p30">
 <div class="container">
     
    
  
-       @if ($errors->any())
-        <div class="alert alert-danger">
-        <ul>
-            @foreach($errors->all() as $error)
-            <li>{{$error}}</li>
-            @endforeach
-        </ul>
-        </div>
-        @endif
+      
         
         <div class="card">
                                     <div class="card-header">
                                         <strong>{{__('training.createDayTraining'.$week[$day])}} </strong> 
                                     </div>
                                     <div class="card-body card-block">
-    {{Form::open([
-            "method"=>"POST",
-            "action"=>"\App\Http\Controllers\TrainingPlanController@store",
-            'files'=>false
-    ])}}
-
-    {{Form::hidden('user_id',Auth::user()->id)}}
+ 
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModal">
+{{__("training.addExercise")}}
+</button>
+ 
 
 
-
-    <table class="table">
+    
+    <!--table class="table">
                                             <thead>
                                                 <tr>
                                                     <td>
@@ -190,7 +241,7 @@
                                                     </td>
                                                 </tr>
                                             </tbody>
-                                        </table>
+                                        </table-->
 
 </div>
 </div>

@@ -1,11 +1,12 @@
 @extends('layouts.app')
-
+ 
+@section('title', __("workout.indexTitle") ) 
+ 
 @section('breadscrumbs')
   {{ Breadcrumbs::render('workout') }}
 @endsection
 
-
-@section('content')
+@section('content') 
 <div class="section__content section__content--p30">
 <div class="container">
     <h2 class="title-1">{{__("workout.indexTitle")}} 
@@ -22,7 +23,7 @@
     @else
     <div class="row mt-4">
         @foreach($sections as $section )
-        <div class="col-4">
+        <div class="col-3">
         <div class="card shadow-sm">
           
         <a href="{{route('workout.show', ['workoutSection' => $section->slug]);}}" >

@@ -10,7 +10,7 @@ class WorkoutImage extends Model
 {
     use HasFactory;
 
-    static $disc = "/sections/"; 
+    static $disc = "/workouts/"; 
     public function imageable()
     {
         return $this->morphTo();        
@@ -22,12 +22,14 @@ class WorkoutImage extends Model
         $this->delete();         
     }
  */
-    static function uploadImage($file, $section)
+    public function getPath()
     {
-        $uploadPicture = $file;
-        //$path = self::$disc.$uploadPicture->hashName() ;
-        $path =  '/workouts/'.$file->hashName() ;
-        Storage::disk('public')->put( '/workouts/' , $file); 
+        return "/storage".$this->path;
+    }
+    static function uploadImage($file, $section)
+    {       
+        $path =  self::$disc.$file->hashName() ;
+        Storage::disk('public')->put( self::$disc , $file); 
         $workoutImage = new WorkoutImage();
         $workoutImage->path = $path;
         $workoutImage->imageable()->associate($section);
