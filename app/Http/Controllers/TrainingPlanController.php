@@ -66,6 +66,11 @@ class TrainingPlanController extends Controller
         return redirect()->route("training.edit",["trainingPlan"=>$plan]);
     }
 
+
+    public function addExercise(Request $request )
+    {
+        dd($request);
+    }
     /**
      * Display the specified resource.
      *
@@ -85,6 +90,8 @@ class TrainingPlanController extends Controller
             6=> "saturday",
             7=> "sunday",
         ];
+
+     
         return view("training.show",["trainingPlan"=>$trainingPlan,"week"=>$week,'trainings'=>$trainings]);
     }
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Training;
+use App\Models\Workout;
 use Illuminate\Http\Request;
 
 class TrainingController extends Controller
@@ -41,7 +42,14 @@ class TrainingController extends Controller
         ];
         //
         //return view("training.show",["trainingPlan"=>$trainingPlan,"week"=>$week,'trainings'=>$trainings]);
-        return view("training.trainItem.create",["week"=>$week,"day"=>$dayOfWeek]);
+        
+        $workouts = Workout::all(['id','title'])->keyBy("id")
+        ->map(function($item){
+            return $item["title"] ;
+        })
+        ->all();
+          
+        return view("training.trainItem.create",["week"=>$week,"day"=>$dayOfWeek,"workouts"=>$workouts]);
 
     }
 

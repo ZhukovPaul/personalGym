@@ -115,6 +115,7 @@ class WorkoutSectionController extends Controller
                 $sections[$key]["image"] =  \Thumbnail::src( env( 'APP_URL' )  .'/storage/'. $section->image->path )->smartcrop(300, 220)->url( true );    
         } 
 
+       
         //$workouts = Workout::where(["workout_section_id"=>$workoutSection->id])->get();   
         $workouts = $workoutSection->workouts;
 

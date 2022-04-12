@@ -94,9 +94,8 @@ class WorkoutController extends Controller
         if( !($curWorkout = Workout::where("slug",$workout)->first())) 
             abort(404);
         
-            
-            //echo $workout;
-        //dd($curWorkout->videos);
+             
+             
         return view("workout.item.index",["workout"=>$curWorkout, "section"=>$workoutSection]);
     }
 
@@ -145,12 +144,12 @@ class WorkoutController extends Controller
             "workout_section_id"   =>  $fields["workout_section_id"],
         ]);
 
-        /*
+         
         if(!$workout->video){
             WorkoutVideo::create(["src"=>$fields["video"],"workout_id"=>$workout->id ]);
         }else{
             $workout->video->update(["src"=>$fields["video"] ]);
-        }*/
+        } 
         //$workoutSection->save();
         
         if($request->hasFile("file")){

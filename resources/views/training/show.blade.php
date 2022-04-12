@@ -41,7 +41,7 @@
             <span class="fc-event-dot"></span> <a href="">change "{{$training->title}}" training</a>
         @endforeach
         @else
-            <span class="fc-event-dot"></span> <a href="{{route('training.trainCreate',['trainingPlan'=>$trainingPlan,'dayOfWeek'=>$key])}}">add training</a>
+            <span class="fc-event-dot"></span> <a href="{{route('training.trainCreate',['trainingPlan'=>$trainingPlan,'dayOfWeek'=>$key])}}">+</a>
         @endif
         </td>
          

@@ -8,38 +8,51 @@
     <!-- Title Page-->
 
     <x-head.tinymce-config/>
+    
     <title> @yield('title')</title>
     @stack("css")
 </head>
 <body class="animsition">
- 
-<div class="page-wrapper">
-        @include("layouts.header")
-            <!-- HEADER DESKTOP-->
-            @hasSection('breadscrumbs')
-            <!-- MAIN CONTENT-->
-            <section class="au-breadcrumb m-t-75">
+    <div class="page-wrapper">
+    @include("layouts.header_new")
+
+    <div class="page-content--bgf7">
+    @hasSection('breadscrumbs')
+        <!-- MAIN CONTENT-->
+        <section class="au-breadcrumb2">
                 <div class="section__content section__content--p30">
-                    <div class="container-fluid">
+                <div class="container"> 
                         <div class="row">
                             <div class="col-md-12">
-
                             @yield('breadscrumbs')
-         
                             </div>
                         </div>
                     </div>
                 </div>
         </section>
-        @endif
-            <div class="main-content  @hasSection('breadscrumbs') pt-4 @else m-t-25  @endif">
-
-
+    @endif
+  
+        <section class="welcome p-t-10 pb-5">
+        <div class="container">       
             @yield('content')
-            </div>
-            <!-- END MAIN CONTENT-->
-            <!-- END PAGE CONTAINER-->
         </div>
+        </section>
+ 
+    </div>
+
+     <!-- COPYRIGHT-->
+     <section class="p-t-60 p-b-20">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="copyright">
+                                <p>Copyright © 2018 Colorlib. All rights reserved. Template by <a href="https://colorlib.com">Colorlib</a>.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- END COPYRIGHT-->
     </div>
     @stack("js")
 </body>

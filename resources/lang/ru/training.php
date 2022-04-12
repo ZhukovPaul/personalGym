@@ -3,6 +3,7 @@
 return [
     "indexTitle"=>"Мои планы тренеровок",
     "createTitle"=>"Новый план тренеровок",
+    "addExercise"=>"Добавить упражнение",
     "editTitle"=>"Именить план тренеровок",
     "addPlan"=>"Создать новый",
     "noPlans"=>"Планы тренеровок пока не созданы",
@@ -11,6 +12,7 @@ return [
     "FormActiveTo"=>"Активен по",
     "FormActive"=>"Активность",
     "FormSubmit"=>"Сохранить",
+    "add"=>"Добавить",
     "FormSubmitUpdate"=>"Обновить",
     "monday"=>"Понедельник",
     "tuesday"=>"Вторник",
@@ -26,6 +28,8 @@ return [
     "createDayTrainingfriday"=>"Новая тренировка Пятница",
     "createDayTrainingsaturday"=>"Новая тренировка Суббота",
     "createDayTrainingsunday"=>"Новая тренировка Воскресенье", 
+    "exercise"=>"Упражнение", 
+    "set"=>"Подход", 
  
 
 ];
