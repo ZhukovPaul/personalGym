@@ -45,6 +45,13 @@ return [
 
         'mysql' => [
             'driver' => 'mysql',
+            'dump' => [
+                'dump_binary_path' => 'C:/server/OpenServer/modules/database/MySQL-8.0/bin', // only the path, so without `mysqldump` or `pg_dump`
+                'use_single_transaction',
+                'timeout' => 60 * 5, // 5 minute timeout
+               // 'exclude_tables' => ['table1', 'table2'],
+               // 'add_extra_option' => '--optionname=optionvalue', // for example '--column-statistics=0'
+            ],
             'url' => env('DATABASE_URL'),
             'host' => env('DB_HOST', '127.0.0.1'),
             'port' => env('DB_PORT', '3306'),
