@@ -6,7 +6,7 @@
 
 
 @section('content')
-
+ 
 <!-- Modal -->
 <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -25,18 +25,20 @@
     ])}}
 
     {{Form::hidden('user_id',Auth::user()->id)}}
+    {{Form::hidden('day_of_week',$day)}}
+    {{Form::hidden('training_plan_id',$trainingPlan->id)}}
 
     <div class="row form-group">
         <div class="col col-md-3">
-            {{Form::label('difficulty',__("training.exercise"),["class"=>"form-control-label"])}}
+            {{Form::label('exercise',__("training.exercise"),["class"=>"form-control-label"])}}
         </div>
         <div class="col-12 col-md-9">
-        {{Form::select('difficulty',$workouts,null,["class"=>"custom-select"])}}
+        {{Form::select('exercise',$workouts,null,["class"=>"custom-select"])}}
     
         </div>
     </div> 
-    @for ($i = 0; $i < 3; $i++)
-    <div class="row form-group">
+    @for ($i = 0; $i < 5; $i++)
+    <div class="row form-group" id="row{{$i}}">
         <div class="col col-md-3">
             {{Form::label('set',__("training.set"),["class"=>"form-control-label"])}}
         </div>
@@ -52,6 +54,9 @@
         <div class="col-12 col-md-1">
         Kg
         </div>
+        <div class="col-12 col-md-1">
+        <a onclick="$('#row{{$i}}').remove();" >X</a>
+        </div>
     </div> 
     @endfor
     </div>
@@ -65,7 +70,7 @@
   </div>
 </div> 
 
-
+ 
 
 <link href="/css/theme.css" rel="stylesheet" media="all">
 <div class="section__content section__content--p30">

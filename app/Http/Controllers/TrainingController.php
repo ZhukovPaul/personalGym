@@ -48,8 +48,8 @@ class TrainingController extends Controller
             return $item["title"] ;
         })
         ->all();
-          
-        return view("training.trainItem.create",["week"=>$week,"day"=>$dayOfWeek,"workouts"=>$workouts]);
+        
+        return view("training.trainItem.create",["trainingPlan"=>$trainingPlan,"week"=>$week,"day"=>$dayOfWeek,"workouts"=>$workouts]);
 
     }
 

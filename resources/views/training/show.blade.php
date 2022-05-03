@@ -37,11 +37,25 @@
     <tr>
         <td>
         @if( isset($trainings[$key]))
-        @foreach($trainings[$key] as $training)
-            <span class="fc-event-dot"></span> <a href="">change "{{$training->title}}" training</a>
-        @endforeach
+            <table class="table ml-5">
+            @foreach($trainings[$key] as $k=> $training)
+                <tr>
+                    <td><b>{{$training["exercise"]->title}}</b>
+                </td>
+                <td>
+                    @foreach($training["sets"] as $set)
+                    ({{$set["count"]}} X {{$set["weight"]}} kg)
+                    @endforeach
+                </td>
+                <td>
+                </td>
+                </tr>
+            @endforeach
+        </table>
+        <span class="fc-event-dot"></span> <a href="{{route('training.trainCreate',['trainingPlan'=>$trainingPlan,'dayOfWeek'=>$key])}}">{{__("training.add")}}</a>
+  
         @else
-            <span class="fc-event-dot"></span> <a href="{{route('training.trainCreate',['trainingPlan'=>$trainingPlan,'dayOfWeek'=>$key])}}">+</a>
+            <span class="fc-event-dot"></span> <a href="{{route('training.trainCreate',['trainingPlan'=>$trainingPlan,'dayOfWeek'=>$key])}}">{{__("training.add")}}</a>
         @endif
         </td>
          

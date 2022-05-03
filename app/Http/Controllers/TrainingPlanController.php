@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Exercise;
+use App\Models\ExerciseSet;
+use App\Models\Training;
 use App\Models\TrainingPlan;
 use Illuminate\Http\Request;
 
@@ -69,7 +72,45 @@ class TrainingPlanController extends Controller
 
     public function addExercise(Request $request )
     {
-        dd($request);
+        $data = $request->only("training_plan_id","user_id","day_of_week","exercise","set_count","set_weight");
+        
+        $training = Training::where(
+            ["training_plan_id"=>$data["training_plan_id"],
+            "day_of_week"=>$data["day_of_week"]
+            ])->first();
+        if(is_null($training)){
+             $training = new Training([
+                 "title"=>"",
+                 "training_plan_id"=>$data["training_plan_id"],
+                 "day_of_week"=>$data["day_of_week"]
+             ]);
+             $training->save();
+        }
+        $trainingId = $training->id;
+      
+        $exercise = Exercise::where(["training_id"=>$trainingId,
+        "workout_id"=> $data["exercise"]])->first();
+        if(is_null($exercise)){
+              
+            $exercise = Exercise::create([
+                "training_id"=>$trainingId,
+                "workout_id"=> (int)$data["exercise"],
+                "sort"=>100
+            ]);
+        
+       
+            for($i=0;$i<count($data["set_count"]); $i++){
+                ExerciseSet::create([
+                    "sort"=>$i*100,
+                    "exercise_id"=>$exercise->id, 
+                    "weight"=>$data["set_weight"][$i],
+                    "count"=>$data["set_count"][$i]
+                ]);
+            }
+        }
+       
+        return redirect()->route("training.edit",["trainingPlan"=>$data["training_plan_id"]]);
+            
     }
     /**
      * Display the specified resource.
@@ -79,7 +120,8 @@ class TrainingPlanController extends Controller
      */
     public function show(TrainingPlan $trainingPlan)
     {
-        $trainings = $trainingPlan->trainings->groupBy('day_of_week')->all();
+        //return $trainingPlan->toArray();
+        $trainings = $trainingPlan->trainings->groupBy('day_of_week')->all() ;
          
         $week = [
             1=> "monday",
@@ -91,9 +133,30 @@ class TrainingPlanController extends Controller
             7=> "sunday",
         ];
 
-     
-        return view("training.show",["trainingPlan"=>$trainingPlan,"week"=>$week,'trainings'=>$trainings]);
+        $dayTrainings = [];
+        foreach($trainings as $dayNumber => $training){
+            
+            $curTraining = $training->first();
+
+            foreach($curTraining->exercises as $exercise){
+              
+                $curExercise = [];
+               
+                $curExercise["sets"] = $exercise->sets;
+                $curExercise["exercise"] = $exercise->workout ;
+                $dayTrainings[$dayNumber][] = $curExercise;
+            }
+                
+        }
+         
+        return view("training.show",["trainingPlan"=>$trainingPlan,"week"=>$week,'trainings'=>$dayTrainings]);
     }
+
+    public function apiTraining( $trainingPlan)
+    {
+        return  "4";
+        //dd($trainingPlan);
+    } 
 
     /**
      * Show the form for editing the specified resource.

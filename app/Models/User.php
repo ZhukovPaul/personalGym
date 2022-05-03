@@ -19,6 +19,7 @@ class User extends Authenticatable
     }
     */
 
+    protected $visible = ["id","name","email"];
 
     /**
      * The attributes that are mass assignable.
