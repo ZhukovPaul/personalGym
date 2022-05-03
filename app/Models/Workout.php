@@ -12,6 +12,7 @@ class Workout extends Model
     use HasFactory;
 
     protected $fillable = ["title","slug","description","difficulty","workout_section_id"];
+    protected $hidden = ["created_at","updated_at","difficulty","type_workout_id","description"];
 
     public static function booted()
     {
