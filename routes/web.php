@@ -61,6 +61,7 @@ Route::prefix("training")->name("training")->group(function(){
     
     Route::get("/{trainingPlan:id}",[TrainingPlanController::class,"show"])->name('.show');
     Route::get("/{trainingPlan:id}/{dayOfWeek}/create",[TrainingController::class,"create"])->name('.trainCreate');
+    Route::get("/{trainingPlan:id}/{dayOfWeek}/createmodal",[TrainingController::class,"createModal"])->name('.trainCreateModal');
     Route::post("/",[TrainingPlanController::class,"store"]);
     Route::post("/addExercise",[TrainingPlanController::class,"addExercise"]);
     Route::get("/edit/{trainingPlan:id}",[TrainingPlanController::class,"edit"])->name(".edit");

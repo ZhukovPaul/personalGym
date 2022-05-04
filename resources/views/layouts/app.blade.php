@@ -8,14 +8,18 @@
     <!-- Title Page-->
 
     <x-head.tinymce-config/>
-    
+ 
+    <script src="{{ URL::asset('/js/app.js') }}" defer></script>
+        
     <title> @yield('title')</title>
     @stack("css")
 </head>
 <body class="animsition">
     <div class="page-wrapper">
     @include("layouts.header_new")
-
+    <div id="app">
+        <example-component/>
+    </div>
     <div class="page-content--bgf7">
     @hasSection('breadscrumbs')
         <!-- MAIN CONTENT-->

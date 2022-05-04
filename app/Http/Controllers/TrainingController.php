@@ -53,6 +53,28 @@ class TrainingController extends Controller
 
     }
 
+    public function createModal(\App\Models\TrainingPlan $trainingPlan, $dayOfWeek)
+    {
+        $week = [
+            1=> "monday",
+            2=> "tuesday",
+            3=> "wednesday",
+            4=> "thursday",
+            5=> "friday",
+            6=> "saturday",
+            7=> "sunday",
+        ];
+        //
+        //return view("training.show",["trainingPlan"=>$trainingPlan,"week"=>$week,'trainings'=>$trainings]);
+        
+        $workouts = Workout::all(['id','title'])->keyBy("id")
+        ->map(function($item){
+            return $item["title"] ;
+        })
+        ->all();
+        return view("training.trainItem.createModal",["trainingPlan"=>$trainingPlan,"week"=>$week,"day"=>$dayOfWeek,"workouts"=>$workouts]);
+
+    }
     /**
      * Store a newly created resource in storage.
      *
