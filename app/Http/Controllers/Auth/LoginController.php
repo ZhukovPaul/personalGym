@@ -1,17 +1,10 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
- 
-use Illuminate\Http\File as Files;
-use Laravel\Socialite\Facades\Socialite;
+
 use App\Http\Controllers\Controller;
-use App\Models\UserGroup;
 use App\Providers\RouteServiceProvider;
-use Facade\FlareClient\Stacktrace\File;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\{Hash,Auth,Storage};
-use Illuminate\Support\Facades\DB;
 
 class LoginController extends Controller
 {
@@ -25,9 +18,9 @@ class LoginController extends Controller
     | to conveniently provide its functionality to your applications.
     |
     */
-
     use AuthenticatesUsers,
-        \App\Traits\VKAuthenticate;
+    \App\Traits\VKAuthenticate;
+    
 
     /**
      * Where to redirect users after login.
@@ -45,8 +38,4 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
-
-    
-
-     
 }
