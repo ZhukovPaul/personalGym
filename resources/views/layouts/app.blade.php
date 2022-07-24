@@ -17,9 +17,9 @@
 <body class="animsition">
     <div class="page-wrapper">
     @include("layouts.header_new")
-    <div id="app">
+    <!--div id="app">
         <example-component/>
-    </div>
+    </div-->
     <div class="page-content--bgf7">
     @hasSection('breadscrumbs')
         <!-- MAIN CONTENT-->
