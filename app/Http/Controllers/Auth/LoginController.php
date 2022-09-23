@@ -19,7 +19,7 @@ class LoginController extends Controller
     |
     */
     use AuthenticatesUsers,
-    \App\Traits\VKAuthenticate;
+        \App\Traits\VKAuthenticate;
     
 
     /**

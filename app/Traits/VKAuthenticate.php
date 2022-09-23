@@ -1,4 +1,4 @@
-<?
+<?php
 namespace App\Traits;
 
 use Illuminate\Support\Facades\{Hash,Auth,Storage,DB};
