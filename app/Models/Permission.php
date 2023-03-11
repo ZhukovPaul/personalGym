@@ -9,8 +9,8 @@ class Permission extends Model
 {
     use HasFactory;
 
-    function roles()
+    public function roles()
     {
-        return $this->belongsToMany(Role::class,"roles_permissions");
+        return $this->belongsToMany(Role::class, "roles_permissions");
     }
 }

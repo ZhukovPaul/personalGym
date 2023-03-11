@@ -11,7 +11,7 @@ class Exercise extends Model
 
     protected $with =['workout','sets'];
 
-    public $timestamps = false; 
+    public $timestamps = false;
     protected $fillable = ["sort","training_id","workout_id"];
 
     public function workout()

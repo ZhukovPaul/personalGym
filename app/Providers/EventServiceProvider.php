@@ -2,10 +2,8 @@
 
 namespace App\Providers;
 
-use \App\Listeners\WorkoutAddSubscriber;
-use \App\Listeners\UserLoginLogoutSubscriber;
-use \SocialiteProviders\VKontakte\VKontakteExtendSocialite;
-use \SocialiteProviders\Manager\SocialiteWasCalled;
+use SocialiteProviders\VKontakte\VKontakteExtendSocialite;
+use SocialiteProviders\Manager\SocialiteWasCalled;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -20,8 +18,8 @@ class EventServiceProvider extends ServiceProvider
      */
 
     protected $subscribe = [
-       
-    ]; 
+
+    ];
 
 
     protected $listen = [

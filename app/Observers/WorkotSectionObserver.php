@@ -2,7 +2,6 @@
 
 namespace App\Observers;
 
- 
 use App\Models\WorkoutSection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -16,15 +15,14 @@ class WorkotSectionObserver
      * @return void
      */
     protected $user ;
-    
+
     public function __construct()
     {
-       $this->user = Auth::user();
+        $this->user = Auth::user();
     }
-    public function created(  WorkoutSection $workoutSection)
+    public function created(WorkoutSection $workoutSection)
     {
-   
-        Storage::disk("public")->append("system.log","User #ID" . $this->user->id . " add new section #ID". $workoutSection->id." '". $workoutSection->title."' ".date("d.m.Y H:i:s"));
+        Storage::disk("public")->append("system.log", "User #ID" . $this->user->id . " add new section #ID". $workoutSection->id." '". $workoutSection->title."' ".date("d.m.Y H:i:s"));
     }
 
     /**
@@ -36,7 +34,7 @@ class WorkotSectionObserver
     public function updated(WorkoutSection $workoutSection)
     {
         //
-        Storage::disk("public")->append("system.log","User #ID" . $this->user->id . " update  section #ID". $workoutSection->id." '". $workoutSection->title."' ".date("d.m.Y H:i:s"));
+        Storage::disk("public")->append("system.log", "User #ID" . $this->user->id . " update  section #ID". $workoutSection->id." '". $workoutSection->title."' ".date("d.m.Y H:i:s"));
     }
 
     /**
@@ -47,7 +45,7 @@ class WorkotSectionObserver
      */
     public function deleted(WorkoutSection $workoutSection)
     {
-        Storage::disk("public")->append("system.log","User #ID" . $this->user->id . " delete section #ID". $workoutSection->id." '". $workoutSection->title."' ".date("d.m.Y H:i:s"));
+        Storage::disk("public")->append("system.log", "User #ID" . $this->user->id . " delete section #ID". $workoutSection->id." '". $workoutSection->title."' ".date("d.m.Y H:i:s"));
     }
 
     /**

@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class TrainingController extends Controller
 {
-    function __construct()
+    public function __construct()
     {
         $this->middleware('auth');
     }
@@ -45,7 +45,8 @@ class TrainingController extends Controller
                 'week' => $week,
                 'day' => $dayOfWeek,
                 'workouts' => $workouts
-            ]);
+            ]
+        );
     }
 
     public function createModal(TrainingPlan $trainingPlan, $dayOfWeek)
@@ -76,7 +77,8 @@ class TrainingController extends Controller
                 'week' => $week,
                 'day' => $dayOfWeek,
                 'workouts' => $workouts
-            ]);
+            ]
+        );
     }
 
     public function store(Request $request)

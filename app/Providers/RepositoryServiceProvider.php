@@ -17,12 +17,11 @@ class RepositoryServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        
         $this->app->bind(Repository::class, WorkoutSectionRepository::class);
         //$this->app->bind(User::class, User::class);
-      /*  $this->app->bind(User::class, function ($app) {
-            return Auth::user();
-        });*/
+        /*  $this->app->bind(User::class, function ($app) {
+              return Auth::user();
+          });*/
         //
     }
 

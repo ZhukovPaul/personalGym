@@ -18,9 +18,9 @@ class LoginController extends Controller
     | to conveniently provide its functionality to your applications.
     |
     */
-    use AuthenticatesUsers,
-        \App\Traits\VKAuthenticate;
-    
+    use AuthenticatesUsers;
+    use \App\Traits\VKAuthenticate;
+
 
     /**
      * Where to redirect users after login.

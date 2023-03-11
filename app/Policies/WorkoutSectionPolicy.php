@@ -42,7 +42,6 @@ class WorkoutSectionPolicy
     public function create(User $user)
     {
         //
-         
     }
 
     /**
@@ -55,7 +54,6 @@ class WorkoutSectionPolicy
     public function update(User $user, WorkoutSection $workoutSection)
     {
         //
-        
     }
 
     /**
@@ -95,10 +93,9 @@ class WorkoutSectionPolicy
     }
 
 
-    function before(User $user, $operation)
+    public function before(User $user, $operation)
     {
-        
-        if($user->inGroup( env("ADMINISTRATOR_GROUP") )){
+        if ($user->inGroup(env("ADMINISTRATOR_GROUP"))) {
             return true;
         }
         return false;

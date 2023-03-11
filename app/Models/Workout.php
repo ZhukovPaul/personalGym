@@ -16,10 +16,10 @@ class Workout extends Model
 
     public static function booted()
     {
-       /* static::updated(function ($workout){
-            $row = $workout->title  . " (" . $workout->section->title.')';
-            Storage::disk('public')->append("system.log",$row);
-        });*/
+        /* static::updated(function ($workout){
+             $row = $workout->title  . " (" . $workout->section->title.')';
+             Storage::disk('public')->append("system.log",$row);
+         });*/
     }
 
     public function image()
@@ -36,5 +36,4 @@ class Workout extends Model
     {
         return $this->belongsTo(WorkoutSection::class);
     }
-   
 }

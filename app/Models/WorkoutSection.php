@@ -14,29 +14,28 @@ class WorkoutSection extends Model
     /*public function __construct( array $attributes = array() ) {
         // mandatory
         parent::__construct($attributes);
-    
+
         //..
     }*/
-   
+
 
     public function image()
     {
-        return $this->morphOne(WorkoutImage::class,"imageable");
+        return $this->morphOne(WorkoutImage::class, "imageable");
     }
 
     public function section()
     {
-        return $this->belongsTo(WorkoutSection::class,"workout_section_id","id");
+        return $this->belongsTo(WorkoutSection::class, "workout_section_id", "id");
     }
 
     public function sections()
     {
         return $this->hasMany(WorkoutSection::class);
     }
-     
+
     public function workouts()
     {
         return $this->hasMany(Workout::class);
     }
-   
 }

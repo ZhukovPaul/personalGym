@@ -5,10 +5,9 @@ namespace App\Repositories;
 use App\Contracts\Repositories\Repository;
 use App\Models\{WorkoutSection, Workout};
 
-
 class WorkoutSectionRepository implements Repository
 {
-    protected $section ; 
+    protected $section ;
 
     public function __construct()
     {
@@ -23,10 +22,11 @@ class WorkoutSectionRepository implements Repository
     public function workouts()
     {
         $workouts  = collect([]);
-      
-        foreach($this->section as $section){
-            if($section->workouts)
+
+        foreach ($this->section as $section) {
+            if ($section->workouts) {
                 $workouts = $workouts->merge($section->workouts->all());
+            }
         }
 
         return $workouts;
