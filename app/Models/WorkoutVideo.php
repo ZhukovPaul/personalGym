@@ -7,13 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class WorkoutVideo extends Model
 {
+    use HasFactory;
 
     protected $fillable = ["src","workout_id"];
 
-    use HasFactory;
-
     public function videoable()
     {
-        return $this->belongsTo(Workout::class);        
+        return $this->belongsTo(Workout::class);
     }
 }

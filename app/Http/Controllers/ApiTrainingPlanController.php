@@ -26,7 +26,7 @@ class ApiTrainingPlanController extends Controller
     public function show(TrainingPlan $trainingPlan)
     {
         return $trainingPlan->toArray();
-       // return $trainingPlan->toJson(JSON_UNESCAPED_UNICODE);
+        // return $trainingPlan->toJson(JSON_UNESCAPED_UNICODE);
     }
 
     public function update(Request $request, TrainingPlan $trainingPlan)

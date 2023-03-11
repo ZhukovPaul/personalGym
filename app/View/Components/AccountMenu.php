@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class AccountMenu extends Component
 {
-    public $user ; 
+    public $user ;
     /**
      * Create a new component instance.
      *
@@ -18,8 +18,8 @@ class AccountMenu extends Component
     {
         $this->user = Auth::user();
         //$this->user->image->path;
-        $this->user->imageSmall =  \Thumbnail::src( env( 'APP_URL' ) . $this->user->image->path )->smartcrop(40, 40)->url( true ); 
-        $this->user->imageMiddle =  \Thumbnail::src( env( 'APP_URL' ) . $this->user->image->path )->smartcrop(65, 65)->url( true ); 
+        $this->user->imageSmall =  \Thumbnail::src(env('APP_URL') . $this->user->image->path)->smartcrop(40, 40)->url(true);
+        $this->user->imageMiddle =  \Thumbnail::src(env('APP_URL') . $this->user->image->path)->smartcrop(65, 65)->url(true);
         //
     }
 

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Contracts\Repositories\Repository;
-use App\Events\WorkoutAdding;
 use App\Models\{WorkoutImage, WorkoutSection};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -12,7 +11,7 @@ class WorkoutSectionController extends Controller
 {
     protected $repository;
 
-    function __construct(Repository $repository)
+    public function __construct(Repository $repository)
     {
         $this->repository = $repository;
         $this->middleware('auth');
@@ -26,10 +25,10 @@ class WorkoutSectionController extends Controller
             ->all();
 
         foreach ($sections as $key => $section) {
-
             if ($section->image) {
                 $sections[$key]["image"] = \Thumbnail::src(
-                    env('APP_URL') . '/storage/' . $section->image->path)
+                    env('APP_URL') . '/storage/' . $section->image->path
+                )
                     ->smartcrop(300, 220)
                     ->url(true);
             }
@@ -84,7 +83,8 @@ class WorkoutSectionController extends Controller
         foreach ($sections as $key => $section) {
             if ($section->image) {
                 $sections[$key]["image"] = \Thumbnail::src(
-                    env('APP_URL') . '/storage/' . $section->image->path)
+                    env('APP_URL') . '/storage/' . $section->image->path
+                )
                     ->smartcrop(300, 220)
                     ->url(true);
             }
@@ -93,11 +93,13 @@ class WorkoutSectionController extends Controller
         $workouts = $workoutSection->workouts;
 
         foreach ($workouts as $key => $workout) {
-            if ($workout->image)
+            if ($workout->image) {
                 $workouts[$key]["image"] = \Thumbnail::src(
-                    env('APP_URL') . '/storage/' . $workout->image->path)
+                    env('APP_URL') . '/storage/' . $workout->image->path
+                )
                     ->smartcrop(300, 220)
                     ->url(true);
+            }
         }
 
         return view("workout.section.index", [
@@ -140,7 +142,6 @@ class WorkoutSectionController extends Controller
         ]);
 
         if ($request->hasFile("file")) {
-
             if ($workoutSection->image) {
                 Storage::delete($workoutSection->image->path);
                 $workoutSection->image->delete();

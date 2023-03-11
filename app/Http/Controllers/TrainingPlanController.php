@@ -10,20 +10,18 @@ use Illuminate\Http\Request;
 
 class TrainingPlanController extends Controller
 {
-    function __construct()
+    public function __construct()
     {
         $this->middleware('auth');
     }
 
     public function index()
     {
-
         return view('training.index', ['plans' => TrainingPlan::all()]);
     }
 
     public function create()
     {
-
         return view('training.create');
     }
 
@@ -67,7 +65,8 @@ class TrainingPlanController extends Controller
         $training = Training::where(
             ['training_plan_id' => $data['training_plan_id'],
                 'day_of_week' => $data['day_of_week']
-            ])->first();
+            ]
+        )->first();
 
         if (is_null($training)) {
             $training = new Training([
@@ -102,9 +101,9 @@ class TrainingPlanController extends Controller
         }
 
         return redirect()->route(
-                'training.edit',
-                ['trainingPlan' => $data['training_plan_id']]
-            );
+            'training.edit',
+            ['trainingPlan' => $data['training_plan_id']]
+        );
     }
 
     public function show(TrainingPlan $trainingPlan)

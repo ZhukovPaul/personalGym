@@ -11,11 +11,12 @@ use Illuminate\Support\Facades\Auth;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory;
+    use Notifiable;
     /*
     public function __construct()
     {
-        return Auth::user();   
+        return Auth::user();
     }
     */
 
@@ -50,24 +51,22 @@ class User extends Authenticatable
 
     public function image()
     {
-        return $this->belongsTo(UserImage::class,"user_image_id","id");
+        return $this->belongsTo(UserImage::class, "user_image_id", "id");
     }
 
- 
+
     public function groups()
     {
-        return $this->belongsToMany(UserGroup::class,"users_groups");
+        return $this->belongsToMany(UserGroup::class, "users_groups");
     }
 
     public function inGroup($group)
     {
-        return (bool)$this->groups->where("slug",$group)->count();
+        return (bool)$this->groups->where("slug", $group)->count();
     }
 
     public function isAdmin()
     {
-       
-        return (bool)$this->groups->where("slug","admin")->count();
+        return (bool)$this->groups->where("slug", "admin")->count();
     }
-    
 }

@@ -1,25 +1,26 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\UserImage;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\{Auth, Storage};
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Thumbnail;
 
 class UserController extends Controller
 {
-
-    function __construct()
+    public function __construct()
     {
         $this->middleware('auth');
     }
 
     public function index()
     {
-
     }
 
     public function create()
