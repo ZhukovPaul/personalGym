@@ -16,14 +16,14 @@ class CreateTrainingPlansTable extends Migration
         Schema::create('training_plans', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->date("active_from");
-            $table->date("active_to");
-            $table->string("title");
-            $table->set('active',["Y","N"]);
-            $table->foreignId("user_id")
+            $table->date('active_from');
+            $table->date('active_to');
+            $table->string('title');
+            $table->set('active', ['Y', 'N']);
+            $table->foreignId('user_id')
                 ->constrained()
-                ->onUpdate("cascade")
-                ->onDelete("cascade");
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
         });
     }
 

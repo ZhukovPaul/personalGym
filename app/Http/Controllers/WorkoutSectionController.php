@@ -3,17 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Contracts\Repositories\Repository;
-use App\Models\{WorkoutImage, WorkoutSection};
+use App\Models\WorkoutImage;
+use App\Models\WorkoutSection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Thumbnail;
 
 class WorkoutSectionController extends Controller
 {
-    protected $repository;
-
-    public function __construct(Repository $repository)
+    public function __construct(protected Repository $repository)
     {
-        $this->repository = $repository;
         $this->middleware('auth');
     }
 
@@ -21,12 +21,12 @@ class WorkoutSectionController extends Controller
     {
         $sections = $this->repository
             ->all()
-            ->where("workout_section_id", null)
+            ->where('workout_section_id', null)
             ->all();
 
         foreach ($sections as $key => $section) {
             if ($section->image) {
-                $sections[$key]["image"] = \Thumbnail::src(
+                $sections[$key]['image'] = Thumbnail::src(
                     env('APP_URL') . '/storage/' . $section->image->path
                 )
                     ->smartcrop(300, 220)
@@ -34,7 +34,7 @@ class WorkoutSectionController extends Controller
             }
         }
 
-        return view("workout.index", ["sections" => $sections]);
+        return view('workout.index', ['sections' => $sections]);
     }
 
     public function create()
@@ -43,36 +43,36 @@ class WorkoutSectionController extends Controller
         $sectAll = [0 => null];
 
         foreach ($sections as $value) {
-            $sectAll[$value["id"]] = $value["title"];
+            $sectAll[$value['id']] = $value['title'];
         }
 
-        return view("workout.section.create", ["sections" => $sectAll]);
+        return view('workout.section.create', ['sections' => $sectAll]);
     }
 
     public function store(Request $request)
     {
         $validate_rules = [
-            "title" => "required|max:50|unique:workout_sections",
-            "file" => "image"
+            'title' => 'required|max:50|unique:workout_sections',
+            'file' => 'image',
         ];
 
         $request->validate($validate_rules);
 
-        $fields = $request->only("title", "slug", "description", "file");
+        $fields = $request->only('title', 'slug', 'description', 'file');
 
         $workoutSection = WorkoutSection::create([
-            "title" => $fields["title"],
-            "slug" => ($fields["slug"])
-                ? \Illuminate\Support\Str::slug($fields["slug"], "_")
-                : \Illuminate\Support\Str::slug($fields["title"], "_"),
-            "description" => $fields["description"],
+            'title' => $fields['title'],
+            'slug' => ($fields['slug'])
+                ? Str::slug($fields['slug'], '_')
+                : Str::slug($fields['title'], '_'),
+            'description' => $fields['description'],
         ]);
 
-        if ($request->hasFile("file")) {
-            WorkoutImage::uploadImage($request->file("file"), $workoutSection);
+        if ($request->hasFile('file')) {
+            WorkoutImage::uploadImage($request->file('file'), $workoutSection);
         }
 
-        return redirect()->route("workout.index");
+        return redirect()->route('workout.index');
     }
 
     public function show(WorkoutSection $workoutSection)
@@ -82,7 +82,7 @@ class WorkoutSectionController extends Controller
 
         foreach ($sections as $key => $section) {
             if ($section->image) {
-                $sections[$key]["image"] = \Thumbnail::src(
+                $sections[$key]['image'] = Thumbnail::src(
                     env('APP_URL') . '/storage/' . $section->image->path
                 )
                     ->smartcrop(300, 220)
@@ -94,7 +94,7 @@ class WorkoutSectionController extends Controller
 
         foreach ($workouts as $key => $workout) {
             if ($workout->image) {
-                $workouts[$key]["image"] = \Thumbnail::src(
+                $workouts[$key]['image'] = Thumbnail::src(
                     env('APP_URL') . '/storage/' . $workout->image->path
                 )
                     ->smartcrop(300, 220)
@@ -102,58 +102,59 @@ class WorkoutSectionController extends Controller
             }
         }
 
-        return view("workout.section.index", [
-            "section" => $workoutSection,
-            "workouts" => $workouts,
-            "sections" => $sections
+        return view('workout.section.index', [
+            'section' => $workoutSection,
+            'workouts' => $workouts,
+            'sections' => $sections,
         ]);
     }
 
     public function edit(WorkoutSection $workoutSection)
     {
-        $sections = WorkoutSection::all("id", "title");
+        $sections = WorkoutSection::all('id', 'title');
         $sectAll = [0 => null];
+
         foreach ($sections as $value) {
-            $sectAll[$value["id"]] = $value["title"];
+            $sectAll[$value['id']] = $value['title'];
         }
 
-        return view("workout.section.edit", [
-            "workout" => $workoutSection,
-            "sections" => $sectAll
+        return view('workout.section.edit', [
+            'workout' => $workoutSection,
+            'sections' => $sectAll,
         ]);
     }
 
     public function update(Request $request, WorkoutSection $workoutSection)
     {
         $validate_rules = [
-            "title" => "required|max:50",
-            "file" => "image"
+            'title' => 'required|max:50',
+            'file' => 'image',
         ];
 
         $request->validate($validate_rules);
-        $fields = $request->only(["title", "slug", "description", "file"]);
+        $fields = $request->only(['title', 'slug', 'description', 'file']);
 
         $workoutSection->update([
-            "title" => $fields["title"],
-            "slug" => ($fields["slug"])
-                ? Str::slug($fields["slug"], "_")
-                : Str::slug($fields["title"], "_"),
-            "description" => $fields["description"],
+            'title' => $fields['title'],
+            'slug' => ($fields['slug'])
+                ? Str::slug($fields['slug'], '_')
+                : Str::slug($fields['title'], '_'),
+            'description' => $fields['description'],
         ]);
 
-        if ($request->hasFile("file")) {
+        if ($request->hasFile('file')) {
             if ($workoutSection->image) {
                 Storage::delete($workoutSection->image->path);
                 $workoutSection->image->delete();
             }
 
             WorkoutImage::uploadImage(
-                $request->file("file"),
+                $request->file('file'),
                 $workoutSection
             );
         }
 
-        return redirect()->route("workout.index");
+        return redirect()->route('workout.index');
     }
 
     public function destroy(WorkoutSection $workoutSection)
@@ -164,6 +165,6 @@ class WorkoutSectionController extends Controller
 
         $workoutSection->delete();
 
-        return redirect()->route("workout.index");
+        return redirect()->route('workout.index');
     }
 }

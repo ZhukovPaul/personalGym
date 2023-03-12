@@ -2,8 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\WorkoutSection;
+use App\Policies\WorkoutSectionPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -14,8 +15,8 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         // 'App\Model' => 'App\Policies\ModelPolicy',
-         //'App\Models\WorkoutSection' => 'App\Policies\WorkoutSectionPolicy',
-         \App\Models\WorkoutSection::class => \App\Policies\WorkoutSectionPolicy::class,
+        //'App\Models\WorkoutSection' => 'App\Policies\WorkoutSectionPolicy',
+        WorkoutSection::class => WorkoutSectionPolicy::class,
     ];
 
     /**

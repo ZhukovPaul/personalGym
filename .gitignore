@@ -3,11 +3,12 @@
 /public/storage
 /public/sections/*
 /public/users/*
+/public/vendor/*
 /storage/*.key
+/storage/tmp/*
 /vendor
 .env
 .env.backup
-.phpunit.result.cache
 Homestead.json
 Homestead.yaml
 npm-debug.log
@@ -17,4 +18,5 @@ _ide_helper_models.php
 .phpstorm.meta.php
 .php-cs-fixer.cache
 /.idea
+/.idea/*
 .phpunit.result.cache

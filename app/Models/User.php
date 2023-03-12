@@ -2,25 +2,17 @@
 
 namespace App\Models;
 
-use App\Models\UserImage;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\Auth;
 
 class User extends Authenticatable
 {
     use HasFactory;
-    use Notifiable;
-    /*
-    public function __construct()
-    {
-        return Auth::user();
-    }
-    */
 
-    protected $visible = ["id","name","email"];
+    use Notifiable;
+
+    protected $visible = ['id', 'name', 'email'];
 
     /**
      * The attributes that are mass assignable.
@@ -28,7 +20,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-       'name', 'lastname','email', 'password',
+        'name', 'lastname', 'email', 'password',
     ];
 
     /**
@@ -51,22 +43,21 @@ class User extends Authenticatable
 
     public function image()
     {
-        return $this->belongsTo(UserImage::class, "user_image_id", "id");
+        return $this->belongsTo(UserImage::class, 'user_image_id', 'id');
     }
-
 
     public function groups()
     {
-        return $this->belongsToMany(UserGroup::class, "users_groups");
+        return $this->belongsToMany(UserGroup::class, 'users_groups');
     }
 
     public function inGroup($group)
     {
-        return (bool)$this->groups->where("slug", $group)->count();
+        return (bool) $this->groups->where('slug', $group)->count();
     }
 
     public function isAdmin()
     {
-        return (bool)$this->groups->where("slug", "admin")->count();
+        return (bool) $this->groups->where('slug', 'admin')->count();
     }
 }

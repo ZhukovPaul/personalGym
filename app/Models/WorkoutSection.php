@@ -9,29 +9,21 @@ class WorkoutSection extends Model
 {
     use HasFactory;
 
-    protected $fillable = ["title","slug","description","workout_section_id"];
-
-    /*public function __construct( array $attributes = array() ) {
-        // mandatory
-        parent::__construct($attributes);
-
-        //..
-    }*/
-
+    protected $fillable = ['title', 'slug', 'description', 'workout_section_id'];
 
     public function image()
     {
-        return $this->morphOne(WorkoutImage::class, "imageable");
+        return $this->morphOne(WorkoutImage::class, 'imageable');
     }
 
     public function section()
     {
-        return $this->belongsTo(WorkoutSection::class, "workout_section_id", "id");
+        return $this->belongsTo(self::class, 'workout_section_id', 'id');
     }
 
     public function sections()
     {
-        return $this->hasMany(WorkoutSection::class);
+        return $this->hasMany(self::class);
     }
 
     public function workouts()

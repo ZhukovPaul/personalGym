@@ -33,9 +33,7 @@ class TrainingController extends Controller
 
         $workouts = Workout::all(['id', 'title'])
             ->keyBy('id')
-            ->map(function ($item) {
-                return $item['title'];
-            })
+            ->map(fn (Workout $item) => $item['title'])
             ->all();
 
         return view(
@@ -44,7 +42,7 @@ class TrainingController extends Controller
                 'trainingPlan' => $trainingPlan,
                 'week' => $week,
                 'day' => $dayOfWeek,
-                'workouts' => $workouts
+                'workouts' => $workouts,
             ]
         );
     }
@@ -65,9 +63,7 @@ class TrainingController extends Controller
 
         $workouts = Workout::all(['id', 'title'])
             ->keyBy('id')
-            ->map(function ($item) {
-                return $item['title'];
-            })
+            ->map(fn (Workout $item) => $item['title'])
             ->all();
 
         return view(
@@ -76,7 +72,7 @@ class TrainingController extends Controller
                 'trainingPlan' => $trainingPlan,
                 'week' => $week,
                 'day' => $dayOfWeek,
-                'workouts' => $workouts
+                'workouts' => $workouts,
             ]
         );
     }

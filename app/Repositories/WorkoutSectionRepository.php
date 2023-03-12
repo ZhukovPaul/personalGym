@@ -3,15 +3,15 @@
 namespace App\Repositories;
 
 use App\Contracts\Repositories\Repository;
-use App\Models\{WorkoutSection, Workout};
+use App\Models\WorkoutSection;
 
 class WorkoutSectionRepository implements Repository
 {
-    protected $section ;
+    protected $section;
 
     public function __construct()
     {
-        $this->section = WorkoutSection::all() ;
+        $this->section = WorkoutSection::all();
     }
 
     public function all()
@@ -21,7 +21,7 @@ class WorkoutSectionRepository implements Repository
 
     public function workouts()
     {
-        $workouts  = collect([]);
+        $workouts = collect([]);
 
         foreach ($this->section as $section) {
             if ($section->workouts) {

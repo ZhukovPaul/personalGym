@@ -15,11 +15,11 @@ class CreateExerciseSetsTable extends Migration
     {
         Schema::create('exercise_sets', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("exercise_id")
+            $table->foreignId('exercise_id')
                 ->constrained()
-                ->onDelete("cascade");
+                ->onDelete('cascade');
             $table->double('weight', 8, 2);
-            $table->integer("count");
+            $table->integer('count');
         });
     }
 

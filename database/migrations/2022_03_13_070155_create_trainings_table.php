@@ -16,11 +16,11 @@ class CreateTrainingsTable extends Migration
         Schema::create('trainings', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->foreignId("training_plan_id")
+            $table->foreignId('training_plan_id')
                 ->constrained()
-                ->onDelete("cascade")
-                ->onUpdate("cascade");
-            $table->set('day_of_week',[1,2,3,4,5,6,7]);
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+            $table->set('day_of_week', [1, 2, 3, 4, 5, 6, 7]);
         });
     }
 

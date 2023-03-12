@@ -9,7 +9,7 @@ class WorkoutVideo extends Model
 {
     use HasFactory;
 
-    protected $fillable = ["src","workout_id"];
+    protected $fillable = ['src', 'workout_id'];
 
     public function videoable()
     {

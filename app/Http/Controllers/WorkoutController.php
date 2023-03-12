@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\{WorkoutSection,WorkoutImage,Workout,WorkoutVideo};
+use App\Models\Workout;
+use App\Models\WorkoutImage;
+use App\Models\WorkoutSection;
+use App\Models\WorkoutVideo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -28,7 +31,7 @@ class WorkoutController extends Controller
     {
         $validate_rules = [
             'title'=>'required|max:50|unique:workouts',
-            'file'=>'image'
+            'file'=>'image',
         ];
 
         $request->validate($validate_rules);
@@ -43,7 +46,7 @@ class WorkoutController extends Controller
 
         $workout = Workout::create([
             'title' => $fields['title'],
-            'slug'  => \Illuminate\Support\Str::slug($fields['title'], '_'),
+            'slug'  => Str::slug($fields['title'], '_'),
             'description'   =>  $fields['description'],
             'difficulty'   =>  $fields['difficulty'],
             'workout_section_id'   =>  $fields['workout_section_id'],
@@ -54,14 +57,14 @@ class WorkoutController extends Controller
         }
 
         if ($fields['video']) {
-            WorkoutVideo::create(['src'=>$fields['video'],'workout_id'=>$workout->id ]);
+            WorkoutVideo::create(['src'=>$fields['video'], 'workout_id'=>$workout->id]);
         }
 
         return redirect()->route(
             'workout.showWorkout',
             [
                 'workoutSection'=>WorkoutSection::find($fields['workout_section_id']),
-                'workout'=>$workout
+                'workout'=>$workout,
             ]
         );
     }
@@ -86,7 +89,7 @@ class WorkoutController extends Controller
 
         return view('workout.item.edit', [
             'workout'=>$curWorkout,
-            'workoutSection'=>$workoutSection
+            'workoutSection'=>$workoutSection,
         ]);
     }
 
@@ -94,7 +97,7 @@ class WorkoutController extends Controller
     {
         $validate_rules = [
             'title'=>'required|max:50',
-            'file'=>'image'
+            'file'=>'image',
         ];
 
         $request->validate($validate_rules);
@@ -115,10 +118,10 @@ class WorkoutController extends Controller
             'workout_section_id'   =>  $fields['workout_section_id'],
         ]);
 
-        if (!$workout->video) {
-            WorkoutVideo::create(['src'=>$fields['video'],'workout_id'=>$workout->id ]);
+        if (! $workout->video) {
+            WorkoutVideo::create(['src'=>$fields['video'], 'workout_id'=>$workout->id]);
         } else {
-            $workout->video->update(['src'=>$fields['video'] ]);
+            $workout->video->update(['src'=>$fields['video']]);
         }
 
         if ($request->hasFile('file')) {
@@ -129,7 +132,7 @@ class WorkoutController extends Controller
 
         return redirect()->route('workout.editWorkout', [
             'workoutSection'=>$ws,
-            'workout'=>$workout
+            'workout'=>$workout,
         ]);
     }
 

@@ -2,33 +2,29 @@
 
 namespace App\View\Components;
 
-use Illuminate\View\Component;
-use App\Models\User;
+use Closure;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\Component;
+use Thumbnail;
 
 class AccountMenu extends Component
 {
-    public $user ;
-    /**
-     * Create a new component instance.
-     *
-     * @return void
-     */
+    public $user;
+
     public function __construct()
     {
         $this->user = Auth::user();
-        //$this->user->image->path;
-        $this->user->imageSmall =  \Thumbnail::src(env('APP_URL') . $this->user->image->path)->smartcrop(40, 40)->url(true);
-        $this->user->imageMiddle =  \Thumbnail::src(env('APP_URL') . $this->user->image->path)->smartcrop(65, 65)->url(true);
-        //
+
+        $this->user->imageSmall = ! is_null($this->user?->image)
+            ? Thumbnail::src(env('APP_URL') . $this->user->image->path)->smartcrop(40, 40)->url(true)
+            : '';
+        $this->user->imageMiddle = ! is_null($this->user?->image)
+            ? Thumbnail::src(env('APP_URL') . $this->user->image->path)->smartcrop(65, 65)->url(true)
+            : '';
     }
 
-    /**
-     * Get the view / contents that represent the component.
-     *
-     * @return \Illuminate\Contracts\View\View|\Closure|string
-     */
-    public function render()
+    public function render(): View|Closure|string
     {
         return view('components.account-menu');
     }

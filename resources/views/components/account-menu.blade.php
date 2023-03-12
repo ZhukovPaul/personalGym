@@ -1,10 +1,12 @@
- 
-   
-    
+
+
+
     <div class="account-wrap">
         <div class="account-item account-item--style2 clearfix js-item-menu">
             <div class="image">
+                @if($user->imageSmall !== '')
                 <img src="{{$user->imageSmall}}" alt="{{$user->name}}" />
+                @endif
             </div>
             <div class="content">
                 <a class="js-acc-btn" href="{{route('personalindex')}}">{{$user->name}}</a>
@@ -13,7 +15,9 @@
                 <div class="info clearfix">
                     <div class="image">
                         <a href="{{route('personalindex')}}">
+                            @if($user->imageMiddle !== '')
                             <img src="{{$user->imageMiddle}}" alt="{{$user->name}}" />
+                            @endif
                         </a>
                     </div>
                     <div class="content">
@@ -49,4 +53,3 @@
     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
              @csrf
          </form>
- 

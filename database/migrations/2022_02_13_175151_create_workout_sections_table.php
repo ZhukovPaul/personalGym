@@ -16,14 +16,14 @@ class CreateWorkoutSectionsTable extends Migration
         Schema::create('workout_sections', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string("title");
-            $table->string("slug");
-            $table->text("description")->nullable();
-            $table->foreignId("workout_section_id")
-            ->nullable()
-            ->constrained()
-            ->onUpdate('SET NULL')
-            ->onDelete('SET NULL');
+            $table->string('title');
+            $table->string('slug');
+            $table->text('description')->nullable();
+            $table->foreignId('workout_section_id')
+                ->nullable()
+                ->constrained()
+                ->onUpdate('SET NULL')
+                ->onDelete('SET NULL');
         });
     }
 

@@ -16,19 +16,19 @@ class CreateWorkoutsTable extends Migration
         Schema::create('workouts', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string("title");
-            $table->string("slug");
-            $table->text("description")->nullable(); 
-            $table->enum('difficulty', ['easy','normal' ,'hard']); 
-            $table->foreignId("workout_section_id")
-            ->constrained()
-            ->onUpdate('cascade')
-            ->onDelete('cascade');
-            $table->foreignId("type_workout_id")
-            ->nullable()
-            ->constrained()
-            ->onUpdate('SET NULL')
-            ->onDelete('SET NULL');
+            $table->string('title');
+            $table->string('slug');
+            $table->text('description')->nullable();
+            $table->enum('difficulty', ['easy', 'normal', 'hard']);
+            $table->foreignId('workout_section_id')
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->foreignId('type_workout_id')
+                ->nullable()
+                ->constrained()
+                ->onUpdate('SET NULL')
+                ->onDelete('SET NULL');
         });
     }
 
