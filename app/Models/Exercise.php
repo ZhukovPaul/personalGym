@@ -9,10 +9,11 @@ class Exercise extends Model
 {
     use HasFactory;
 
-    protected $with =['workout','sets'];
+    protected $with = ['workout', 'sets'];
 
     public $timestamps = false;
-    protected $fillable = ["sort","training_id","workout_id"];
+
+    protected $fillable = ['sort', 'training_id', 'workout_id'];
 
     public function workout()
     {

@@ -16,12 +16,12 @@ class CreateWorkoutVideosTable extends Migration
         Schema::create('workout_videos', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->foreignId("workout_id")
-            ->constrained()
-            ->onUpdate('cascade')
-            ->onDelete('cascade');
-            $table->string("title");
-            $table->string("src");
+            $table->foreignId('workout_id')
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->string('title');
+            $table->string('src');
         });
     }
 

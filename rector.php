@@ -84,7 +84,7 @@ use Rector\Php81\Rector\ClassMethod\NewInInitializerRector;
 use Rector\Set\ValueObject\LevelSetList;
 
 return static function (RectorConfig $rectorConfig): void {
-    $rectorConfig->parallel();
+    $rectorConfig->disableParallel();
     $rectorConfig->importNames();
     $rectorConfig->cacheDirectory('./storage/tmp/rector');
     $rectorConfig->sets([LevelSetList::UP_TO_PHP_81]);

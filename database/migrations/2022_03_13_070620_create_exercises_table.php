@@ -15,13 +15,13 @@ class CreateExercisesTable extends Migration
     {
         Schema::create('exercises', function (Blueprint $table) {
             $table->id();
-            $table->integer("sort")->default(100);
-            $table->foreignId("training_id")
+            $table->integer('sort')->default(100);
+            $table->foreignId('training_id')
                 ->constrained()
-                ->onDelete("cascade");
-            $table->foreignId("workout_id")
+                ->onDelete('cascade');
+            $table->foreignId('workout_id')
                 ->constrained()
-                ->onDelete("cascade");
+                ->onDelete('cascade');
         });
     }
 

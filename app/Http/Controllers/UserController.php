@@ -10,7 +10,7 @@ use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use Thumbnail;
+use Illuminate\View\View;
 
 class UserController extends Controller
 {
@@ -33,15 +33,18 @@ class UserController extends Controller
         //
     }
 
-    public function show(): ?string
+    public function show(): View
     {
         $curUser = Auth::user();
-        $img = Thumbnail::src(env('APP_URL') . $curUser->image->path)->smartcrop(220, 220)->url(true);
+
+        $img = ! is_null($curUser->image)
+            ? Thumbnail::src(env('APP_URL') . $curUser->image->path)->smartcrop(220, 220)->url(true)
+            : '';
 
         return view('personal.index', ['user' => $curUser, 'smallImage' => $img]);
     }
 
-    public function edit(): ?string
+    public function edit(): View
     {
         return view('personal.edit', ['user' => Auth::user()]);
     }
@@ -49,11 +52,12 @@ class UserController extends Controller
     public function update(Request $request)
     {
         $postParams = $request->only('id', 'name', 'lastname', 'birthday', 'email');
+
         $validationRules = [
             'name' => 'required|max:255',
             'birthday' => 'date',
             'file' => 'image',
-            'email' => 'email'
+            'email' => 'email',
         ];
 
         $request->validate($validationRules);
@@ -76,6 +80,7 @@ class UserController extends Controller
 
             $user->user_image_id = $userPicture->id;
         }
+
         $user->save();
 
         return redirect()->route('personalindex');

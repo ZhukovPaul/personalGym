@@ -2,11 +2,11 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use App\Contracts\Repositories\Repository;
 use App\Models\User;
 use App\Repositories\WorkoutSectionRepository;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
 {

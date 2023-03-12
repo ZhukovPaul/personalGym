@@ -16,8 +16,8 @@ class CreateWorkoutImagesTable extends Migration
         Schema::create('workout_images', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string("path");
-            $table->morphs("imageable");
+            $table->string('path');
+            $table->morphs('imageable');
         });
     }
 

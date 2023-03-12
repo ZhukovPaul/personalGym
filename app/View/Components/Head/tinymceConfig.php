@@ -2,6 +2,7 @@
 
 namespace App\View\Components\Head;
 
+use Closure;
 use Illuminate\View\Component;
 
 class tinymceConfig extends Component
@@ -19,7 +20,7 @@ class tinymceConfig extends Component
     /**
      * Get the view / contents that represent the component.
      *
-     * @return \Illuminate\Contracts\View\View|\Closure|string
+     * @return \Illuminate\Contracts\View\View|Closure|string
      */
     public function render()
     {

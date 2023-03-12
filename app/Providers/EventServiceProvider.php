@@ -2,12 +2,12 @@
 
 namespace App\Providers;
 
-use SocialiteProviders\VKontakte\VKontakteExtendSocialite;
-use SocialiteProviders\Manager\SocialiteWasCalled;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
+use SocialiteProviders\Manager\SocialiteWasCalled;
+use SocialiteProviders\VKontakte\VKontakteExtendSocialite;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -16,20 +16,18 @@ class EventServiceProvider extends ServiceProvider
      *
      * @var array
      */
-
     protected $subscribe = [
 
     ];
-
 
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
         SocialiteWasCalled::class => [
-            VKontakteExtendSocialite::class.'@handle',
+            VKontakteExtendSocialite::class . '@handle',
         ],
-      /*  WorkoutAdding::class =>[
+        /*  WorkoutAdding::class =>[
             WorkoutAddListener::class
         ]*/
     ];
@@ -44,7 +42,7 @@ class EventServiceProvider extends ServiceProvider
         //
     }
 
-    public function shouldDiscoverEvents()
+    public function shouldDiscoverEvents(): bool
     {
         return true;
     }

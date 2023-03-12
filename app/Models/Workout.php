@@ -4,15 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Storage;
 
+/**
+ * @method static where(string $string, $workout)
+ */
 class Workout extends Model
 {
     use HasFactory;
 
-    protected $fillable = ["title","slug","description","difficulty","workout_section_id"];
-    protected $hidden = ["created_at","updated_at","difficulty","type_workout_id","description"];
+    protected $fillable = ['title', 'slug', 'description', 'difficulty', 'workout_section_id'];
+
+    protected $hidden = ['created_at', 'updated_at', 'difficulty', 'type_workout_id', 'description'];
 
     public static function booted()
     {

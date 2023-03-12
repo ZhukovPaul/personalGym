@@ -19,6 +19,7 @@
         "laravel/tinker": "^2.0",
         "laravel/ui": "^3.4",
         "laravelcollective/html": "^6.3",
+        "opcodesio/log-viewer": "^2.3",
         "rolandstarke/laravel-thumbnail": "^1.0",
         "socialiteproviders/vkontakte": "^4.2",
         "tinymce/tinymce": "^6.0"
@@ -42,7 +43,9 @@
     },
     "extra": {
         "laravel": {
-            "dont-discover": []
+            "dont-discover": [
+                "laravel/telescope"
+            ]
         }
     },
     "autoload": {
@@ -71,7 +74,7 @@
             "@php artisan key:generate --ansi"
         ],
         "lint": [
-            "vendor/bin/php-cs-fixer fix . --dry-run",
+            "vendor/bin/php-cs-fixer fix -vvv --show-progress=dots",
             "vendor/bin/rector process app -a vendor/autoload.php --dry-run"
         ]
     }

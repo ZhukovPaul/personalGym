@@ -14,18 +14,17 @@ class CreateUsersGroupsTable extends Migration
     public function up()
     {
         Schema::create('users_groups', function (Blueprint $table) {
-            $table->foreignId("user_id")
+            $table->foreignId('user_id')
                 ->nullable()
                 ->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->foreignId("user_group_id")
+            $table->foreignId('user_group_id')
                 ->nullable()
                 ->constrained()
-                ->onUpdate("cascade")
-                ->onDelete("cascade");
-            $table->primary(["user_id","user_group_id"]);
-
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->primary(['user_id', 'user_group_id']);
         });
     }
 

@@ -29,10 +29,8 @@ class TrainingPlanController extends Controller
     {
         $validation_rules = [
 
-            'title' => 'required|max:255'
-            , 'user_id' => 'required'
-            , 'active_from' => 'required',
-            'active_to' => 'required'
+            'title' => 'required|max:255', 'user_id' => 'required', 'active_from' => 'required',
+            'active_to' => 'required',
         ];
 
         $request->validate($validation_rules);
@@ -44,12 +42,11 @@ class TrainingPlanController extends Controller
             'user_id' => $fills['user_id'],
             'active_from' => $fills['active_from'],
             'active_to' => $fills['active_to'],
-            'active' => $fills['active'] ?? 'N'
+            'active' => $fills['active'] ?? 'N',
         ]);
 
         return redirect()->route('training.edit', ['trainingPlan' => $plan]);
     }
-
 
     public function addExercise(Request $request)
     {
@@ -64,7 +61,7 @@ class TrainingPlanController extends Controller
 
         $training = Training::where(
             ['training_plan_id' => $data['training_plan_id'],
-                'day_of_week' => $data['day_of_week']
+                'day_of_week' => $data['day_of_week'],
             ]
         )->first();
 
@@ -72,7 +69,7 @@ class TrainingPlanController extends Controller
             $training = new Training([
                 'title' => '',
                 'training_plan_id' => $data['training_plan_id'],
-                'day_of_week' => $data['day_of_week']
+                'day_of_week' => $data['day_of_week'],
             ]);
 
             $training->save();
@@ -86,16 +83,18 @@ class TrainingPlanController extends Controller
         if (is_null($exercise)) {
             $exercise = Exercise::create([
                 'training_id' => $trainingId,
-                'workout_id' => (int)$data['exercise'],
-                'sort' => 100
+                'workout_id' => (int) $data['exercise'],
+                'sort' => 100,
             ]);
 
-            for ($i = 0; $i < count($data['set_count']); $i++) {
+            $itemsCount = is_countable($data['set_count']) ? count($data['set_count']) : 0;
+
+            for ($i = 0; $i < $itemsCount; $i++) {
                 ExerciseSet::create([
                     'sort' => $i * 100,
                     'exercise_id' => $exercise->id,
                     'weight' => $data['set_weight'][$i],
-                    'count' => $data['set_count'][$i]
+                    'count' => $data['set_count'][$i],
                 ]);
             }
         }
@@ -121,8 +120,10 @@ class TrainingPlanController extends Controller
         ];
 
         $dayTrainings = [];
+
         foreach ($trainings as $dayNumber => $training) {
             $curTraining = $training->first();
+
             foreach ($curTraining->exercises as $exercise) {
                 $curExercise = [];
                 $curExercise['sets'] = $exercise->sets;
@@ -134,14 +135,13 @@ class TrainingPlanController extends Controller
         return view('training.show', [
             'trainingPlan' => $trainingPlan,
             'week' => $week,
-            'trainings' => $dayTrainings
+            'trainings' => $dayTrainings,
         ]);
     }
 
-    public function apiTraining($trainingPlan)
+    public function apiTraining(TrainingPlan $trainingPlan): string
     {
         return '4';
-        //dd($trainingPlan);
     }
 
     public function edit(TrainingPlan $trainingPlan)
@@ -152,10 +152,8 @@ class TrainingPlanController extends Controller
     public function update(Request $request, TrainingPlan $trainingPlan)
     {
         $validation_rules = [
-            'title' => 'required|max:255'
-            , 'user_id' => 'required'
-            , 'active_from' => 'required',
-            'active_to' => 'required'
+            'title' => 'required|max:255', 'user_id' => 'required', 'active_from' => 'required',
+            'active_to' => 'required',
         ];
 
         $request->validate($validation_rules);
@@ -167,7 +165,7 @@ class TrainingPlanController extends Controller
             'user_id' => $fills['user_id'],
             'active_from' => $fills['active_from'],
             'active_to' => $fills['active_to'],
-            'active' => (isset($fills['active'])) ? 'Y' : 'N'
+            'active' => (isset($fills['active'])) ? 'Y' : 'N',
         ]);
 
         return redirect()->route('training.edit', ['trainingPlan' => $trainingPlan]);
