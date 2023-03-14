@@ -12,4 +12,9 @@ final class UserRepository
     {
         return User::query()->where('id', '=', $id)->first();
     }
+
+    public function getByEmail(string $email): ?User
+    {
+        return User::query()->where('email', '=', $email)->first();
+    }
 }

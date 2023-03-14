@@ -12,7 +12,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         DB::table('user_groups')->insert(['title'=>'Administrators', 'slug'=>'admin']);
-        DB::table('user_groups')->insert(['title'=>'Registred users', 'slug'=>'registred']);
+        DB::table('user_groups')->insert(['title'=>'Registered users', 'slug'=>'registered']);
         // User::factory(10)->create();
     }
 }
