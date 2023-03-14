@@ -9,12 +9,12 @@
                 @endif
             </div>
             <div class="content">
-                <a class="js-acc-btn" href="{{route('personalindex')}}">{{$user->name}}</a>
+                <a class="js-acc-btn" href="{{route('personal.index')}}">{{$user->name}}</a>
             </div>
             <div class="account-dropdown js-dropdown">
                 <div class="info clearfix">
                     <div class="image">
-                        <a href="{{route('personalindex')}}">
+                        <a href="{{route('personal.index')}}">
                             @if($user->imageMiddle !== '')
                             <img src="{{$user->imageMiddle}}" alt="{{$user->name}}" />
                             @endif
@@ -22,14 +22,14 @@
                     </div>
                     <div class="content">
                         <h5 class="name">
-                            <a href="{{route('personalindex')}}">{{$user->name}} {{$user->lastname}}</a>
+                            <a href="{{route('personal.index')}}">{{$user->name}} {{$user->lastname}}</a>
                         </h5>
                         <span class="email">{{$user->email}}</span>
                     </div>
                 </div>
                 <div class="account-dropdown__body">
                     <div class="account-dropdown__item">
-                        <a href="{{route('personalindex')}}">
+                        <a href="{{route('personal.index')}}">
                             <i class="zmdi zmdi-account"></i>{{__("componentAccountMenu.account")}}</a>
                     </div>
                     <div class="account-dropdown__item">

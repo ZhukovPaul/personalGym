@@ -14,7 +14,7 @@ Auth::routes();
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::prefix('personal')->name('personal')->group(function () {
-    Route::get('/', [UserController::class, 'show'])->name('index');
+    Route::get('/', [UserController::class, 'show'])->name('.index');
     Route::get('/edit', [UserController::class, 'edit'])->name('edit');
     Route::post('/edit', [UserController::class, 'update'])->name('update');
 });
