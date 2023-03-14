@@ -10,13 +10,15 @@ use Illuminate\Notifications\Notifiable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Spatie\Permission\Traits\HasRoles;
 
 /**
  * @method static create(array $array)
  */
 class User extends Authenticatable implements HasMedia
 {
-    use HasFactory,
+    use HasRoles,
+        HasFactory,
         Notifiable ,
         InteractsWithMedia;
 
