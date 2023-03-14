@@ -17,7 +17,9 @@
                 <div class="card-body card-block">
          <div class="row">
              <div class="col-3 text-center">
-                <img src="" class="  rounded-circle "   />
+                 @if(! is_null($user->getPersonalPhoto()))
+                    <img src="{{$user->getPersonalPhoto()->getUrl()}}" class="  rounded-circle "   />
+                 @endif
              </div>
              <div class="col-9">
              <table class="table table-borderless   table-earning">

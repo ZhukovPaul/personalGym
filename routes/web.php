@@ -1,12 +1,12 @@
 <?php
 
-use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TrainingController;
 use App\Http\Controllers\TrainingPlanController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WorkoutController;
 use App\Http\Controllers\WorkoutSectionController;
+use App\Services\Authorization\VK;
 use Illuminate\Support\Facades\Route;
 
 Auth::routes();
@@ -19,12 +19,12 @@ Route::prefix('personal')->name('personal')->group(function () {
     Route::post('/edit', [UserController::class, 'update'])->name('update');
 });
 
-Route::get('/login/vk', [LoginController::class, 'redirectToVkProvider'])->name('login.vk');
-Route::get('/login/vk/callback', [LoginController::class, 'handleVkProviderCallback'])->name('login.callback');
+Route::get('/login/vk', [VK::class, 'redirectToProvider'])->name('login.vk');
+Route::get('/login/vk/callback', [VK::class, 'handle'])->name('login.callback');
 
 Route::prefix('workout')->name('workout')->group(function () {
     Route::get('/', [WorkoutSectionController::class, 'index'])->name('.index');
-    Route::get('/create', [WorkoutSectionController::class, 'create'])->name('.create')->middleware("can:create,App\Models\WorkoutSection");
+    Route::get('/create', [WorkoutSectionController::class, 'create'])->name('.create');
     Route::post('/', [WorkoutSectionController::class, 'store']);
 
     Route::get('/{workoutSection:slug}/', [WorkoutSectionController::class, 'show'])->name('.show');

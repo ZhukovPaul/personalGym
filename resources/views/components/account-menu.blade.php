@@ -4,8 +4,8 @@
     <div class="account-wrap">
         <div class="account-item account-item--style2 clearfix js-item-menu">
             <div class="image">
-                @if($user->imageSmall !== '')
-                <img src="{{$user->imageSmall}}" alt="{{$user->name}}" />
+                @if(!is_null($user->getPersonalPhoto()))
+                <img src="{{$user->getPersonalPhoto()->getUrl()}}" alt="{{$user->name}}" />
                 @endif
             </div>
             <div class="content">
@@ -15,8 +15,8 @@
                 <div class="info clearfix">
                     <div class="image">
                         <a href="{{route('personal.index')}}">
-                            @if($user->imageMiddle !== '')
-                            <img src="{{$user->imageMiddle}}" alt="{{$user->name}}" />
+                            @if(! is_null($user->getPersonalPhoto()))
+                            <img src="{{$user->getPersonalPhoto()->getUrl()}}" alt="{{$user->name}}" />
                             @endif
                         </a>
                     </div>

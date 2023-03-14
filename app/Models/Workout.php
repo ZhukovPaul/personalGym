@@ -25,16 +25,6 @@ class Workout extends Model
          });*/
     }
 
-    public function image()
-    {
-        return $this->morphOne(WorkoutImage::class, 'imageable');
-    }
-
-    public function video()
-    {
-        return $this->hasOne(WorkoutVideo::class);
-    }
-
     public function section()
     {
         return $this->belongsTo(WorkoutSection::class);

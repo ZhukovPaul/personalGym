@@ -11,11 +11,6 @@ class WorkoutSection extends Model
 
     protected $fillable = ['title', 'slug', 'description', 'workout_section_id'];
 
-    public function image()
-    {
-        return $this->morphOne(WorkoutImage::class, 'imageable');
-    }
-
     public function section()
     {
         return $this->belongsTo(self::class, 'workout_section_id', 'id');

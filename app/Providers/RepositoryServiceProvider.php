@@ -3,9 +3,7 @@
 namespace App\Providers;
 
 use App\Contracts\Repositories\Repository;
-use App\Models\User;
 use App\Repositories\WorkoutSectionRepository;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -18,11 +16,6 @@ class RepositoryServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(Repository::class, WorkoutSectionRepository::class);
-        //$this->app->bind(User::class, User::class);
-        /*  $this->app->bind(User::class, function ($app) {
-              return Auth::user();
-          });*/
-        //
     }
 
     /**
