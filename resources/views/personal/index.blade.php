@@ -2,9 +2,9 @@
 
 @section('title',"Profile user: ".$user->name." " .$user->lastname )
 @section('content')
- 
+
 <div class="container">
- 
+
     <div class="row mt-3">
         <div class="col-lg-12">
         <div class="card">
@@ -17,11 +17,11 @@
                 <div class="card-body card-block">
          <div class="row">
              <div class="col-3 text-center">
-                <img src="{{$smallImage}}" class="  rounded-circle "   />
+                <img src="" class="  rounded-circle "   />
              </div>
              <div class="col-9">
              <table class="table table-borderless   table-earning">
-         
+
             <tr>
                 <td>NAME</td>
                 <td>{{$user->name}}</td>
@@ -45,11 +45,11 @@
         </table>
              </div>
          </div>
-        
+
         </div>
         </div>
     </div>
-   
-   
+
+
 </div>
 @endsection

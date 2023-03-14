@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use App\Models\UserImage;
-use Illuminate\Contracts\Filesystem\Filesystem;
+use App\Actions\Users\UpdateUserProfileAction;
+use App\Http\Requests\UserUpdateRequest;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class UserController extends Controller
@@ -35,13 +34,7 @@ class UserController extends Controller
 
     public function show(): View
     {
-        $curUser = Auth::user();
-
-        $img = ! is_null($curUser->image)
-            ? Thumbnail::src(env('APP_URL') . $curUser->image->path)->smartcrop(220, 220)->url(true)
-            : '';
-
-        return view('personal.index', ['user' => $curUser, 'smallImage' => $img]);
+        return view('personal.index', ['user' => Auth::user()]);
     }
 
     public function edit(): View
@@ -49,41 +42,13 @@ class UserController extends Controller
         return view('personal.edit', ['user' => Auth::user()]);
     }
 
-    public function update(Request $request)
+    public function update(UserUpdateRequest $request, UpdateUserProfileAction $updateUserAction): RedirectResponse
     {
-        $postParams = $request->only('id', 'name', 'lastname', 'birthday', 'email');
+        $userUpdateData = $request->getDTO();
 
-        $validationRules = [
-            'name' => 'required|max:255',
-            'birthday' => 'date',
-            'file' => 'image',
-            'email' => 'email',
-        ];
+        $updateUserAction($userUpdateData);
 
-        $request->validate($validationRules);
-
-        $user = User::find($postParams['id']);
-        $user->fill($postParams);
-        $user->birthday = $postParams['birthday'];
-
-        if ($request->hasFile('user_image_id')) {
-            $uploadPicture = $request->file('user_image_id');
-            $picturePath = Storage::putFile(
-                'public',
-                $uploadPicture,
-                ['visibility' => Filesystem::VISIBILITY_PUBLIC]
-            );
-
-            $userPicture = new UserImage();
-            $userPicture->path = $picturePath;
-            $userPicture->save();
-
-            $user->user_image_id = $userPicture->id;
-        }
-
-        $user->save();
-
-        return redirect()->route('personalindex');
+        return redirect()->route('personal.index');
     }
 
     public function destroy($id)
